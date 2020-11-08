@@ -1,6 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <h1>{{w}}</h1>
+    <div>{{ data }}</div>
   </q-page>
 </template>
 
@@ -9,7 +10,8 @@ export default {
   name: 'PageIndex',
   data () {
     return {
-      w: null
+      w: null,
+      data: {}
     }
   },
   mounted () {
