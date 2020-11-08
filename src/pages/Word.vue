@@ -15,6 +15,16 @@
       <ol>
         <li v-for="(d, idx) in data.h[0].d" :key="idx">
           <router-link tag="a" class = "r" v-for="r in g(d.f)" :key="r.p" :to ="r.p">{{ r.t }}</router-link>
+
+          <br/>
+          例如：
+          <br/>
+          <span v-if="d.e">
+            <span v-for = "k in parse(d.e[0])" :key="k">
+              <router-link tag="a" class = "r" v-for="r in g(k)" :key="r.p" :to ="r.p">{{ r.t }}</router-link>
+              <br/>
+            </span>
+          </span>
         </li>
       </ol>
     </div>
@@ -61,6 +71,15 @@ export default {
           p: '/w/' + t[1].replace(/`(.+?)~/g, '$1'),
           t: t[1].replace(/`(.+?)~/g, '$1')
         }
+      })
+    },
+    parse (f) {
+      console.log(f)
+      const regexp = /「(.+?)」/g
+      const array = [...f.matchAll(regexp)]
+      console.log(array)
+      return array.map((t) => {
+        return t[1].replace(/「(.+?)」/g, '$1')
       })
     }
   },
