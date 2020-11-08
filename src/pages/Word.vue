@@ -9,7 +9,7 @@
     <div v-if = "data">
       <ol>
         <li v-for="(d, idx) in data.h[0].d" :key="idx">
-          <router-link class = "r" v-for="r in g(d.f)" :key="r.p" :to ="r.p">{{ r.t }}</router-link>
+          <router-link tag="a" class = "r" v-for="r in g(d.f)" :key="r.p" :to ="r.p">{{ r.t }}</router-link>
         </li>
       </ol>
     </div>
@@ -48,6 +48,18 @@ export default {
           t: t[1].replace(/`(.+?)~/g, '$1')
         }
       })
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.w = this.$route.params.id
+      this.$axios.get('https://www.moedict.tw/c/' + this.$route.params.id + '.json')
+        .then((response) => {
+          this.data = response.data
+          this.yin = this.data.h[0].b.substr(0, this.data.h[0].b.length - 1)
+          this.diao = this.data.h[0].b.substr(this.data.h[0].b.length - 1, this.data.h[0].b.length)
+        })
+      this.$forceUpdate()
     }
   }
 }
