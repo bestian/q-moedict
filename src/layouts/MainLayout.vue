@@ -27,6 +27,14 @@
       bordered
       content-class="bg-grey-1"
     >
+    <q-infinite-scroll @load="onLoad" :offset="250"
+      :scroll-target="$refs.scrollTargetRef">
+      <q-list bordered>
+        <q-item clickable v-for = "k in has(data, myKey).slice(0, n)" :to = "'/w/' + k" :key="k">
+          {{k}}
+        </q-item>
+      </q-list>
+    </q-infinite-scroll>
     </q-drawer>
 
     <q-page-container>
@@ -43,11 +51,20 @@ export default {
     return {
       myKey: '',
       data: [],
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
+      n: 50
+    }
+  },
+  methods: {
+    onLoad () {
+      this.n += 50
+    },
+    has (data, k) {
+      return data.filter((x) => { return x.indexOf(k) > -1 })
     }
   },
   mounted () {
-    this.$axios.get('https://www.moedict.tw/c/' + this.w + '.json')
+    this.$axios.get('https://www.moedict.tw/c/index.json')
       .then((response) => {
         this.data = response.data
       })

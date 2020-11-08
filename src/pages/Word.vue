@@ -1,9 +1,14 @@
 <template>
   <q-page class="flex flex-center">
-    <h1>{{w}}
-      <span id ="b">
-        <span id ="yin"> {{yin}} </span>
-        <span id ="diao"> {{diao}} </span>
+    <h1>
+      <span v-for = "y in yindiao(w, b)" :key="y">
+        {{ y.w }}
+        <span id ="b">
+          <span>
+            <span class = "yin"> {{y.yin}} </span>
+            <span class = "diao"> {{y.diao}} </span>
+          </span>
+        </span>
       </span>
     </h1>
     <div v-if = "data">
@@ -21,9 +26,8 @@ export default {
   name: 'PageIndex',
   data () {
     return {
-      w: '萌',
-      yin: null,
-      diao: null,
+      w: null,
+      b: null,
       data: null
     }
   },
@@ -32,11 +36,21 @@ export default {
     this.$axios.get('https://www.moedict.tw/c/' + this.$route.params.id + '.json')
       .then((response) => {
         this.data = response.data
-        this.yin = this.data.h[0].b.substr(0, this.data.h[0].b.length - 1)
-        this.diao = this.data.h[0].b.substr(this.data.h[0].b.length - 1, this.data.h[0].b.length)
+        this.b = this.data.h[0].b
       })
   },
   methods: {
+    yindiao (w, b) {
+      var word = w.split('')
+      var arr = ('' + b).split('　')
+      return arr.map((k, idx) => {
+        return {
+          w: word[idx],
+          yin: k.substr(0, k.length - 1),
+          diao: k.substr(k.length - 1, k.length)
+        }
+      })
+    },
     g (f) {
       console.log(f)
       const regexp = /`(.+?)~/g
@@ -56,8 +70,7 @@ export default {
       this.$axios.get('https://www.moedict.tw/c/' + this.$route.params.id + '.json')
         .then((response) => {
           this.data = response.data
-          this.yin = this.data.h[0].b.substr(0, this.data.h[0].b.length - 1)
-          this.diao = this.data.h[0].b.substr(this.data.h[0].b.length - 1, this.data.h[0].b.length)
+          this.b = this.data.h[0].b
         })
       this.$forceUpdate()
     }
@@ -66,20 +79,25 @@ export default {
 </script>
 
 <style type="text/css" scoped="">
+  h1 {
+    font-size: 64px;
+  }
   #b {
     position: relative;
+    right: .5em;
+    top: .9em;
     display: inline-block;
     font-size: 24px;
     line-height: 100%;
     width: 1em;
-    height: 3em;
+    height: 4em;
     overflow: visible;
   }
 
-  #diao {
-    position: absolute;
-    right: 0;
-    top: 0.8em;
+  .diao {
+    position: relative;
+    left: .8em;
+    top: -1.5em;
   }
 
   a {
