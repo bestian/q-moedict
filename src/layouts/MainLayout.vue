@@ -16,8 +16,6 @@
           <input type="search" name="s" v-model="myKey" />
           <button @click="$router.push('/w/' + myKey)">查詢</button>
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
