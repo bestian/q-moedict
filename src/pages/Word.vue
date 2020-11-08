@@ -43,7 +43,7 @@ export default {
   },
   mounted () {
     this.w = this.$route.params.id
-    this.$axios.get('https://www.moedict.tw/c/' + this.$route.params.id + '.json')
+    this.$axios.get('https://www.moedict.tw/c/' + this.w + '.json')
       .then((response) => {
         this.data = response.data
         this.b = this.data.h[0].b
@@ -86,7 +86,7 @@ export default {
   watch: {
     $route (to, from) {
       this.w = this.$route.params.id
-      this.$axios.get('https://www.moedict.tw/c/' + this.$route.params.id + '.json')
+      this.$axios.get('https://www.moedict.tw/c/' + this.w + '.json')
         .then((response) => {
           this.data = response.data
           this.b = this.data.h[0].b
