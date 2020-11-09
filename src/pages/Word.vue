@@ -1,50 +1,52 @@
 <template>
   <q-page class="word" v-if="data">
-    <span v-for = "y in yindiao(w, b)" :key="y.yin">
-      <h1>{{ y.w }}</h1>
-      <span id ="b">
-        <span class="yindiao">
-          <span class = "yin"> {{y.yin}} </span>
-          <span class = "diao"> {{y.diao}} </span>
+    <div v-for = "(b, idx) in bs" :key = "idx">
+      <span v-for = "y in yindiao(w, b)" :key="y.yin">
+        <h1>{{ y.w }}</h1>
+        <span id ="b">
+          <span class="yindiao">
+            <span class = "yin"> {{y.yin}} </span>
+            <span class = "diao"> {{y.diao}} </span>
+          </span>
         </span>
       </span>
-    </span>
-    <span v-if = "data.radical">
-      <span class="radical">{{ data.radical }}</span> + {{ data.non_radical_stroke_count }} = {{ data.stroke_count }}
-    </span>
-    <a class ="star" v-if = "stars.indexOf(w) == -1" @click = "star(w)">
-      <q-icon name="star_outline" />
-    </a>
-    <a class ="star"  v-else @click="unstar(w)">
-      <q-icon name="star" />
-    </a>
-    <div v-if = "data">
-      <ol>
-        <li v-for = "d in data.heteronyms[0].definitions" :key = "d.def">
-          <span v-if = "d.type">
-            <span class="type">{{ d.type }}</span>：
-          </span>
-          <span class="def" v-if = "d.def">
-            <router-link v-for = "(r, idx) in d.def.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
-          </span>
-          <div v-if = "d.example">
-            <div v-for = "e in d.example" :key="e">
-              <router-link v-for = "(r, idx) in e.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+      <span v-if = "data.radical">
+        <span class="radical">{{ data.radical }}</span> + {{ data.non_radical_stroke_count }} = {{ data.stroke_count }}
+      </span>
+      <a class ="star" v-if = "stars.indexOf(w) == -1" @click = "star(w)">
+        <q-icon name="star_outline" />
+      </a>
+      <a class ="star"  v-else @click="unstar(w)">
+        <q-icon name="star" />
+      </a>
+      <div v-if = "data">
+        <ol>
+          <li v-for = "d in data.heteronyms[idx].definitions" :key = "d.def">
+            <span v-if = "d.type">
+              <span class="type">{{ d.type }}</span>：
+            </span>
+            <span class="def" v-if = "d.def">
+              <router-link v-for = "(r, idx) in d.def.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+            </span>
+            <div v-if = "d.example">
+              <div v-for = "e in d.example" :key="e">
+                <router-link v-for = "(r, idx) in e.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+              </div>
             </div>
-          </div>
-          <br/>
-          <ol>
-            <li v-for = "q in d.quote" :key="q">
-              <router-link v-for = "(r, idx) in q.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
-            </li>
-          </ol>
-          <span class="antonyms" v-if = "d.antonyms">
-            <span class="type">反</span>
-              <router-link v-for = "(r, idx) in d.antonyms.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
-          </span>
-          <br/>
-        </li>
-      </ol>
+            <br/>
+            <ol>
+              <li v-for = "q in d.quote" :key="q">
+                <router-link v-for = "(r, idx) in q.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+              </li>
+            </ol>
+            <span class="antonyms" v-if = "d.antonyms">
+              <span class="type">反</span>
+                <router-link v-for = "(r, idx) in d.antonyms.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+            </span>
+            <br/>
+          </li>
+        </ol>
+      </div>
     </div>
   </q-page>
 </template>
@@ -55,7 +57,7 @@ export default {
   data () {
     return {
       w: '',
-      b: '',
+      bs: [],
       data: null
     }
   },
@@ -66,7 +68,7 @@ export default {
       .then((response) => {
         this.data = response.data
         console.log(this.data)
-        this.b = this.data.heteronyms[0].bopomofo
+        this.bs = this.data.heteronyms.map((o) => { return o.bopomofo })
       })
   },
   methods: {
@@ -151,6 +153,7 @@ export default {
     display: inline;
     margin-right: .3em;
   }
+
   #b {
     position: relative;
     right: .5em;

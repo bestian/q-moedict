@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          <input id="s" type="search" name="s" v-model="myKey" list="words" />
+          <input id="s" type="search" name="s" v-model="myKey" list="words" placeholder="輸入字詞" @keydown.enter="$router.push('/w/' + myKey)"/>
           <datalist id ="words">
             <option v-for = "d in has(data, myKey).slice(0,n)" :key="d" :value="d"></option>
             }
@@ -81,6 +81,6 @@ export default {
 
 <style type="text/css">
   #s {
-    width: 120px !important;
+    width: 140px !important;
   }
 </style>
