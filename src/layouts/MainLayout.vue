@@ -12,8 +12,7 @@
         />
 
         <q-toolbar-title>
-          萌典
-          <input type="search" name="s" v-model="myKey" list="words" />
+          <input id="s" type="search" name="s" v-model="myKey" list="words" />
           <datalist id ="words">
             <option v-for = "d in has(data, myKey).slice(0,n)" :key="d" :value="d"></option>
             }
@@ -79,3 +78,9 @@ export default {
   }
 }
 </script>
+
+<style type="text/css">
+  #s {
+    width: 120px !important;
+  }
+</style>
