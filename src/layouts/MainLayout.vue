@@ -31,6 +31,9 @@
     <q-infinite-scroll @load="onLoad" :offset="250"
       :scroll-target="$refs.scrollTargetRef">
       <q-list bordered>
+        <q-item>
+          <b>已加星號</b>
+        </q-item>
         <q-item clickable v-for = "k in stars" :to = "'/w/' + k" :key="k">
           {{k}}
         </q-item>
