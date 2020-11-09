@@ -26,7 +26,7 @@
               <span class="type">{{ d.type }}</span>：
             </span>
             <span class="def" v-if = "d.def">
-              <router-link v-for = "(r, idx) in d.def.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+              <router-link v-for = "(r, idx) in p(d.def).split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
             </span>
             <div v-if = "d.example">
               <div v-for = "e in d.example" :key="e">
@@ -105,26 +105,18 @@ export default {
         return obj
       })
     },
-    g (f) {
-      console.log(f)
-      const regexp = /`(.+?)~/g
-      const array = [...f.matchAll(regexp)]
-      console.log(array)
-      return array.map((t) => {
-        return {
-          p: '/w/' + t[1].replace(/`(.+?)~/g, '$1'),
-          t: t[1].replace(/`(.+?)~/g, '$1')
-        }
-      })
-    },
-    parse (f) {
-      console.log(f)
-      const regexp = /「(.+?)」/g
-      const array = [...f.matchAll(regexp)]
-      console.log(array)
-      return array.map((t) => {
-        return t[1].replace(/「(.+?)」/g, '$1')
-      })
+    p (s) {
+      return s
+        .replace(/{\[8ebc\]}/g, '⚋')
+        .replace(/{\[8ebd\]}/g, '⚊')
+        .replace(/{\[8e79\]}/g, '☰')
+        .replace(/{\[8e7b\]}/g, '☱')
+        .replace(/{\[8e7c\]}/g, '☲')
+        .replace(/{\[8e7e\]}/g, '☳')
+        .replace(/{\[8e7d\]}/g, '☴')
+        .replace(/{\[8ea1\]}/g, '☵')
+        .replace(/{\[8ea2\]}/g, '☶')
+        .replace(/{\[8e7a\]}/g, '☷')
     }
   },
   watch: {
@@ -134,7 +126,7 @@ export default {
         .then((response) => {
           this.data = response.data
           console.log(this.data)
-          this.b = this.data.heteronyms[0].bopomofo
+          this.bs = this.data.heteronyms.map((o) => { return o.bopomofo })
         })
       this.$forceUpdate()
     }
