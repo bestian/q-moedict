@@ -13,7 +13,11 @@
 
         <q-toolbar-title>
           萌典
-          <input type="search" name="s" v-model="myKey" />
+          <input type="search" name="s" v-model="myKey" list="words" />
+          <datalist id ="words">
+            <option v-for = "d in has(data, myKey).slice(0,n)" :key="d" :value="d"></option>
+            }
+          </datalist>
           <button @click="$router.push('/w/' + myKey)">查詢</button>
         </q-toolbar-title>
       </q-toolbar>
@@ -28,7 +32,7 @@
     <q-infinite-scroll @load="onLoad" :offset="250"
       :scroll-target="$refs.scrollTargetRef">
       <q-list bordered>
-        <q-item clickable v-for = "k in has(data, myKey).slice(0, n)" :to = "'/w/' + k" :key="k">
+        <q-item clickable v-for = "k in stars" :to = "'/w/' + k" :key="k">
           {{k}}
         </q-item>
       </q-list>
@@ -36,7 +40,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view @updateStars = "updateStars()" :stars="stars"/>
     </q-page-container>
   </q-layout>
 </template>
@@ -49,8 +53,9 @@ export default {
     return {
       myKey: '',
       data: [],
+      stars: [],
       leftDrawerOpen: false,
-      n: 50
+      n: 100
     }
   },
   methods: {
@@ -58,7 +63,11 @@ export default {
       this.n += 50
     },
     has (data, k) {
+      // console.log(data)
       return data.filter((x) => { return x.indexOf(k) > -1 })
+    },
+    updateStars () {
+      this.stars = this.$q.localStorage.getItem('words') || []
     }
   },
   mounted () {
@@ -66,6 +75,7 @@ export default {
       .then((response) => {
         this.data = response.data
       })
+    this.stars = this.$q.localStorage.getItem('words') || []
   }
 }
 </script>

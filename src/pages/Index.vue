@@ -1,30 +1,48 @@
 <template>
-  <q-page class="flex flex-center">
-    <h1>
-      <span v-for = "y in yindiao(w, b)" :key="y">
-        {{ y.w }}
-        <span id ="b">
-          <span>
-            <span class = "yin"> {{y.yin}} </span>
-            <span class = "diao"> {{y.diao}} </span>
-          </span>
+  <q-page class="word" v-if="data">
+    <span v-for = "y in yindiao(w, b)" :key="y.yin">
+      <h1>{{ y.w }}</h1>
+      <span id ="b">
+        <span class="yindiao">
+          <span class = "yin"> {{y.yin}} </span>
+          <span class = "diao"> {{y.diao}} </span>
         </span>
       </span>
-    </h1>
+    </span>
+    <span v-if = "data.radical">
+      <span class="radical">{{ data.radical }}</span> + {{ data.non_radical_stroke_count }} = {{ data.stroke_count }}
+    </span>
+    <a class ="star" v-if = "stars.indexOf(w) == -1" @click = "star(w)">
+      <q-icon name="star_outline" />
+    </a>
+    <a class ="star"  v-else @click="unstar(w)">
+      <q-icon name="star" />
+    </a>
     <div v-if = "data">
       <ol>
-        <li v-for="(d, idx) in data.h[0].d" :key="idx">
-          <router-link tag="a" class = "r" v-for="r in g(d.f)" :key="r.p" :to ="r.p">{{ r.t }}</router-link>
-
-          <br/>
-          例如：
-          <br/>
-          <span v-if="d.e">
-            <span v-for = "k in parse(d.e[0])" :key="k">
-              <router-link tag="a" class = "r" v-for="r in g(k)" :key="r.p" :to ="r.p">{{ r.t }}</router-link>
-              <br/>
-            </span>
+        <li v-for = "d in data.heteronyms[0].definitions" :key = "d.def">
+          <span v-if = "d.type">
+            <span class="type">{{ d.type }}</span>：
           </span>
+          <span class="def" v-if = "d.def">
+            <router-link v-for = "(r, idx) in d.def.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+          </span>
+          <div v-if = "d.example">
+            <div v-for = "e in d.example" :key="e">
+              <router-link v-for = "(r, idx) in e.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+            </div>
+          </div>
+          <br/>
+          <ol>
+            <li v-for = "q in d.quote" :key="q">
+              <router-link v-for = "(r, idx) in q.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+            </li>
+          </ol>
+          <span class="antonyms" v-if = "d.antonyms">
+            <span class="type">反</span>
+              <router-link v-for = "(r, idx) in d.antonyms.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+          </span>
+          <br/>
         </li>
       </ol>
     </div>
@@ -36,29 +54,53 @@ export default {
   name: 'PageIndex',
   data () {
     return {
-      w: null,
-      b: null,
+      w: '',
+      b: '',
       data: null
     }
   },
+  props: ['stars'],
   mounted () {
     this.w = '萌'
-    this.$axios.get('https://www.moedict.tw/c/' + this.w + '.json')
+    this.$axios.get('https://www.moedict.tw/raw/' + this.w + '.json')
       .then((response) => {
         this.data = response.data
-        this.b = this.data.h[0].b
+        console.log(this.data)
+        this.b = this.data.heteronyms[0].bopomofo
       })
   },
   methods: {
+    star (w) {
+      var arr = this.$q.localStorage.getItem('words')
+      if (!arr) { arr = [] }
+      arr = arr.filter((x) => { return x !== this.w })
+      arr.push(w)
+      this.$q.localStorage.set('words', arr)
+      this.$emit('updateStars')
+    },
+    unstar (w) {
+      var arr = this.$q.localStorage.getItem('words')
+      if (!arr) { arr = [] }
+      arr = arr.filter((x) => { return x !== this.w })
+      this.$q.localStorage.set('words', arr)
+      this.$emit('updateStars')
+    },
     yindiao (w, b) {
       var word = w.split('')
-      var arr = ('' + b).split('　')
+      var arr = ('' + b).split(' ')
       return arr.map((k, idx) => {
-        return {
+        var obj = {
           w: word[idx],
           yin: k.substr(0, k.length - 1),
           diao: k.substr(k.length - 1, k.length)
         }
+
+        if (obj.diao !== 'ˋ' && obj.diao !== 'ˊ' && obj.diao !== 'ˇ' && obj.diao !== 'ˊ') {
+          obj.yin = obj.yin + obj.diao
+          obj.diao = ''
+        }
+
+        return obj
       })
     },
     g (f) {
@@ -86,10 +128,11 @@ export default {
   watch: {
     $route (to, from) {
       this.w = this.$route.params.id
-      this.$axios.get('https://www.moedict.tw/c/' + this.$route.params.id + '.json')
+      this.$axios.get('https://www.moedict.tw/raw/' + this.w + '.json')
         .then((response) => {
           this.data = response.data
-          this.b = this.data.h[0].b
+          console.log(this.data)
+          this.b = this.data.heteronyms[0].bopomofo
         })
       this.$forceUpdate()
     }
@@ -98,8 +141,15 @@ export default {
 </script>
 
 <style type="text/css" scoped="">
+
+  .word {
+    padding: 0 1em;
+  }
+
   h1 {
     font-size: 64px;
+    display: inline;
+    margin-right: .3em;
   }
   #b {
     position: relative;
@@ -115,12 +165,11 @@ export default {
 
   .diao {
     position: relative;
-    left: .8em;
-    top: -1.5em;
   }
 
   a {
     cursor: pointer;
+    text-decoration: none;
   }
 
   .r {
@@ -128,6 +177,29 @@ export default {
   }
 
   .r::after {
+  }
+
+  .type, .radical {
+    background-color: rgb(225,100,100);
+    border-radius: 2px;
+    margin-right: .2em;
+    padding: 0 .1em;
+  }
+
+  .star {
+    font-size: 24px;
+    color: gold;
+  }
+
+  .yindiao {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    top: -2.5em;
+  }
+
+  .yin {
+    line-height: 1em;
   }
 
 </style>
