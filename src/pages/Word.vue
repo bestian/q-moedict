@@ -30,13 +30,13 @@
             </span>
             <div v-if = "d.example">
               <div v-for = "e in d.example" :key="e">
-                <router-link v-for = "(r, idx) in e.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+                <router-link v-for = "(r, idx) in p(e).split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
               </div>
             </div>
             <br/>
             <ol>
               <li v-for = "q in d.quote" :key="q">
-                <router-link v-for = "(r, idx) in q.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+                <router-link v-for = "(r, idx) in p(q).split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
               </li>
             </ol>
             <span class="antonyms" v-if = "d.antonyms">
@@ -117,6 +117,7 @@ export default {
         .replace(/{\[8ea1\]}/g, '☵')
         .replace(/{\[8ea2\]}/g, '☶')
         .replace(/{\[8e7a\]}/g, '☷')
+        .replace(/{\[9264\]}/g, '灾')
     }
   },
   watch: {
