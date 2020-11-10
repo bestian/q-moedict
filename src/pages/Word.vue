@@ -10,8 +10,19 @@
           </span>
         </span>
       </span>
-      <span v-if = "data.radical">
-        <span class="radical">{{ data.radical }}</span> + {{ data.non_radical_stroke_count }} = {{ data.stroke_count }}
+
+      <audio id="au" v-if = "data.h[idx]['=']">
+        <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.mp3'" type="audio/mp3"/>
+        <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
+      </audio>
+
+      <a id = "play" @click = "play()" v-if = "data.h[idx]['=']">
+        <q-icon name="play_arrow" v-if="!playing"/>
+        <q-icon name="pause" v-else/>
+      </a>
+
+      <span v-if = "data.r">
+        <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.s }}
       </span>
       <a class ="star" v-if = "stars.indexOf(w) == -1" @click = "star(w)">
         <q-icon name="star_outline" />
@@ -21,27 +32,27 @@
       </a>
       <div v-if = "data">
         <ol>
-          <li v-for = "d in data.heteronyms[idx].definitions" :key = "d.def">
+          <li v-for = "d in data.h[idx].d" :key = "d.f">
             <span v-if = "d.type">
-              <span class="type">{{ d.type }}</span>：
+              <span class="type">{{ p(d.type)[0] }}</span>：
             </span>
-            <span class="def" v-if = "d.def">
-              <router-link v-for = "(r, idx) in p(d.def).split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+            <span class="def" v-if = "d.f">
+              <router-link v-for = "(r, idx) in p(d.f)" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
             </span>
-            <div v-if = "d.example">
-              <div v-for = "e in d.example" :key="e">
-                <router-link v-for = "(r, idx) in p(e).split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+            <div v-if = "d.e">
+              <div v-for = "e in d.e" :key="e">
+                <router-link v-for = "(r, idx) in p(e)" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
               </div>
             </div>
             <br/>
             <ol>
-              <li v-for = "q in d.quote" :key="q">
-                <router-link v-for = "(r, idx) in p(q).split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+              <li v-for = "q in d.q" :key="q">
+                <router-link v-for = "(r, idx) in p(q)" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
               </li>
             </ol>
-            <span class="antonyms" v-if = "d.antonyms">
+            <span class="antonyms" v-if = "d.a">
               <span class="type">反</span>
-                <router-link v-for = "(r, idx) in d.antonyms.split('')" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+                <router-link v-for = "(r, idx) in p(d.a)" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
             </span>
             <br/>
           </li>
@@ -58,20 +69,32 @@ export default {
     return {
       w: '',
       bs: [],
-      data: null
+      data: null,
+      playing: false
     }
   },
   props: ['stars'],
   mounted () {
     this.w = this.$route.params.id
-    this.$axios.get('https://www.moedict.tw/raw/' + this.w + '.json')
+    this.$axios.get('https://www.moedict.tw/a/' + this.w + '.json')
       .then((response) => {
         this.data = response.data
         console.log(this.data)
-        this.bs = this.data.heteronyms.map((o) => { return o.bopomofo })
+        this.bs = this.data.h.map((o) => { return o.b })
+        this.playing = false
       })
   },
   methods: {
+    play () {
+      if (!this.playing) {
+        document.getElementById('au').load()
+        document.getElementById('au').play()
+        this.playing = true
+      } else {
+        document.getElementById('au').pause()
+        this.playing = false
+      }
+    },
     star (w) {
       var arr = this.$q.localStorage.getItem('words')
       if (!arr) { arr = [] }
@@ -88,8 +111,8 @@ export default {
       this.$emit('updateStars')
     },
     yindiao (w, b) {
-      var word = w.split('')
-      var arr = ('' + b).split(' ')
+      var word = w
+      var arr = ('' + b).split('　')
       return arr.map((k, idx) => {
         var obj = {
           w: word[idx],
@@ -106,7 +129,7 @@ export default {
       })
     },
     p (s) {
-      return s
+      var a = s
         .replace(/{\[8ebc\]}/g, '⚋')
         .replace(/{\[8ebd\]}/g, '⚊')
         .replace(/{\[8e79\]}/g, '☰')
@@ -118,16 +141,23 @@ export default {
         .replace(/{\[8ea2\]}/g, '☶')
         .replace(/{\[8e7a\]}/g, '☷')
         .replace(/{\[9264\]}/g, '灾')
+      var arr = [...a.matchAll(/(0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|．|、|。|；|「|」|『|』|（|）|\(|\)|，|`(.+?)~)/g)].map((o) => {
+        const w = o.filter((k) => { return k })
+        // console.log(w)
+        return w[w.length - 1]
+      })
+      return arr
     }
   },
   watch: {
     $route (to, from) {
       this.w = this.$route.params.id
-      this.$axios.get('https://www.moedict.tw/raw/' + this.w + '.json')
+      this.$axios.get('https://www.moedict.tw/a/' + this.w + '.json')
         .then((response) => {
           this.data = response.data
           console.log(this.data)
-          this.bs = this.data.heteronyms.map((o) => { return o.bopomofo })
+          this.bs = this.data.h.map((o) => { return o.b })
+          this.playing = false
         })
       this.$forceUpdate()
     }
@@ -196,6 +226,12 @@ export default {
 
   .yin {
     line-height: 1em;
+  }
+
+  #play {
+    color: #c33;
+    margin-right: 1em;
+    font-size: 40px;
   }
 
 </style>
