@@ -116,7 +116,7 @@ export default {
       return arr.map((k, idx) => {
         var obj = {
           w: word[idx],
-          yin: k.substr(0, k.length - 1),
+          yin: k.substr(0, k.length - 1).replace('ㄧ', '─'),
           diao: k.substr(k.length - 1, k.length)
         }
 
