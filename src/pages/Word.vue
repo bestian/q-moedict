@@ -141,7 +141,7 @@ export default {
         .replace(/{\[8ea2\]}/g, '☶')
         .replace(/{\[8e7a\]}/g, '☷')
         .replace(/{\[9264\]}/g, '灾')
-      var arr = [...a.matchAll(/(0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|．|、|。|；|「|」|『|』|（|）|\(|\)|，|`(.+?)~)/g)].map((o) => {
+      var arr = [...a.matchAll(/(⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|．|、|。|；|「|」|『|』|（|）|\(|\)|，|`(.+?)~)/g)].map((o) => {
         const w = o.filter((k) => { return k })
         // console.log(w)
         return w[w.length - 1]
