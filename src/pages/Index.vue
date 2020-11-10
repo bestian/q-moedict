@@ -22,7 +22,7 @@
       </a>
 
       <span v-if = "data.r">
-        <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.s }}
+        <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
       </span>
       <a class ="star" v-if = "stars.indexOf(w) == -1" @click = "star(w)">
         <q-icon name="star_outline" />
@@ -116,7 +116,7 @@ export default {
       return arr.map((k, idx) => {
         var obj = {
           w: word[idx],
-          yin: k.substr(0, k.length - 1),
+          yin: k.substr(0, k.length - 1).replace('ㄧ', '─'),
           diao: k.substr(k.length - 1, k.length)
         }
 
