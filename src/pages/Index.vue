@@ -58,6 +58,15 @@
           </li>
         </ol>
       </div>
+      <span class="antonyms" v-if = "data.English">
+        <span class="type">英</span> {{data.English}}<br/>
+      </span>
+      <span class="antonyms" v-if = "data.Deutsch">
+        <span class="type">德</span> {{data.Deutsch}}<br/>
+      </span>
+      <span class="antonyms" v-if = "data.francais">
+        <span class="type">法</span> {{data.francais}}<br/>
+      </span>
     </div>
   </q-page>
 </template>
@@ -114,6 +123,7 @@ export default {
       var word = w
       var arr = ('' + b).split('　')
       return arr.map((k, idx) => {
+        k = k.replace(/（.+）/g, '')
         var obj = {
           w: word[idx],
           yin: k.substr(0, k.length - 1).replace('ㄧ', '─'),
