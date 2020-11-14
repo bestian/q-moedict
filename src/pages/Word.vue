@@ -1,13 +1,14 @@
 <template>
   <q-page class="word" v-if="data">
     <div v-for = "(b, idx) in bs" :key = "idx">
-      <span v-for = "y in yindiao(w, b)" :key="y.yin">
+      <span v-for = "(y, i) in yindiao(w, b, data.h[idx].p)" :key="y.yin">
         <h1>{{ y.w }}</h1>
         <span id ="b">
           <span class="yindiao">
             <span class = "yin"> {{y.yin}} </span>
             <span class = "diao"> {{y.diao}} </span>
           </span>
+          <span class = "p" v-show="i == 0"> {{y.pin}} </span>
         </span>
       </span>
 
@@ -119,7 +120,7 @@ export default {
       this.$q.localStorage.set('words', arr)
       this.$emit('updateStars')
     },
-    yindiao (w, b) {
+    yindiao (w, b, p) {
       var word = w
       var arr = ('' + b).split('　')
       return arr.map((k, idx) => {
@@ -127,7 +128,8 @@ export default {
         var obj = {
           w: word[idx],
           yin: k.substr(0, k.length - 1).replace('ㄧ', '─'),
-          diao: k.substr(k.length - 1, k.length)
+          diao: k.substr(k.length - 1, k.length),
+          pin: p
         }
 
         if (obj.diao !== 'ˋ' && obj.diao !== 'ˊ' && obj.diao !== 'ˇ' && obj.diao !== 'ˊ') {
@@ -151,6 +153,7 @@ export default {
         .replace(/{\[8ea2\]}/g, '☶')
         .replace(/{\[8e7a\]}/g, '☷')
         .replace(/{\[9264\]}/g, '灾')
+        .replace(/{\[9064\]}/g, '从')
       var arr = [...a.matchAll(/(⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|．|、|。|；|「|」|『|』|（|）|\(|\)|，|`(.+?)~)/g)].map((o) => {
         const w = o.filter((k) => { return k })
         // console.log(w)
@@ -231,7 +234,8 @@ export default {
     display: inline-flex;
     align-items: center;
     position: relative;
-    top: -2.5em;
+    top: -2.2em;
+    color: gray;
   }
 
   .yin {
@@ -242,6 +246,14 @@ export default {
     color: #c33;
     margin-right: 1em;
     font-size: 40px;
+  }
+
+  .p {
+    position: absolute;
+    bottom: 2.2em;
+    left: -2.5em;
+    color: gray;
+    width: 10em;
   }
 
 </style>
