@@ -131,10 +131,10 @@ export default {
       var word = w
       var arr = ('' + b).split('　')
       return arr.map((k, idx) => {
-        k = k.replace(/（.+）/g, '')
+        k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
         var obj = {
           w: word[idx],
-          yin: k.substr(0, k.length - 1).replace('ㄧ', '─'),
+          yin: k.substr(0, k.length - 1)
           diao: k.substr(k.length - 1, k.length),
           pin: p
         }
