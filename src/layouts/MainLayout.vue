@@ -73,7 +73,7 @@ export default {
     }
   },
   mounted () {
-    this.$axios.get('https://www.moedict.tw/c/index.json')
+    this.$axios.get('https://www.moedict.tw/a/index.json')
       .then((response) => {
         this.data = response.data
       })
