@@ -38,22 +38,22 @@
               <span class="type">{{ p(d.type)[0] }}</span>：
             </span>
             <span class="def" v-if = "d.f">
-              <router-link v-for = "(r, idx) in p(d.f)" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+              <router-link v-for = "(r, idx) in p(d.f)" :to = "'/w/' + r" :key = "r+idx" :disabled="dis(r)" :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
             </span>
             <div v-if = "d.e">
               <div v-for = "e in d.e" :key="e">
-                <router-link v-for = "(r, idx) in p(e)" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+                <router-link v-for = "(r, idx) in p(e)" :to = "'/w/' + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
               </div>
             </div>
             <br/>
             <ol>
               <li v-for = "q in d.q" :key="q">
-                <router-link v-for = "(r, idx) in p(q)" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+                <router-link v-for = "(r, idx) in p(q)" :to = "'/w/' + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
               </li>
             </ol>
             <span class="antonyms" v-if = "d.a">
               <span class="type">反</span>
-                <router-link v-for = "(r, idx) in p(d.a)" :to = "'/w/' + r" :key = "r+idx">{{ r }}</router-link>
+                <router-link v-for = "(r, idx) in p(d.a)" :to = "'/w/' + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
             </span>
             <br/>
           </li>
@@ -146,6 +146,9 @@ export default {
 
         return obj
       })
+    },
+    dis (w) {
+      return w.match(/(⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|从|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|．|、|。|；|「|」|『|』|（|）|\(|\)|，)/)
     },
     p (s) {
       var a = s
