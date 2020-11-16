@@ -19,6 +19,7 @@
           </datalist>
           <button @click="$router.push('/w/' + myKey)">查詢</button>
         </q-toolbar-title>
+        <div class="gcse-search"></div>
       </q-toolbar>
     </q-header>
 
@@ -61,6 +62,22 @@ export default {
     }
   },
   methods: {
+    deep () {
+      window.IS_GOOGLE_AFS_IFRAME_ = true
+      const cx = '007966820757635393756:sasf0rnevk4'
+      var gcse = document.createElement('script')
+      gcse.type = 'text/javascript'
+      gcse.async = true
+      gcse.src = '//www.google.com/cse/cse.js?cx=' + cx
+      var s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(gcse, s)
+      setInterval(function () {
+        var e = document.getElementById('gsc-i-id1')
+        if (e) {
+          e.setAttribute('placeholder', '全站搜詢')
+        }
+      }, 500)
+    },
     onLoad () {
       this.n += 50
     },
@@ -73,11 +90,35 @@ export default {
     }
   },
   mounted () {
+    var vm = this
     this.$axios.get('https://www.moedict.tw/a/index.json')
       .then((response) => {
         this.data = response.data
       })
     this.stars = this.$q.localStorage.getItem('words') || []
+    this.deep()
+    setInterval(function () {
+      var list = document.getElementsByClassName('gs-title')
+      for (var i = 0; i < list.length; i++) {
+        const e = list[i]
+        if (e.getAttribute('href')) {
+          var l = e.getAttribute('href')
+          l = ('' + l).replace('https://www.moedict.tw/', '')
+          e.removeAttribute('href')
+          e.removeAttribute('data-cturl')
+          e.removeAttribute('data-ctorig')
+          e.setAttribute('data-h', l)
+          e.setAttribute('target', 'self')
+          e.addEventListener('click', function () {
+            console.log(this.getAttribute('data-h'))
+            vm.$router.push('/w/' + this.getAttribute('data-h'))
+            var x = document.getElementsByClassName('gsc-modal-background-image gsc-modal-background-image-visible')
+            x[0].click()
+            vm.$forceUpdate()
+          })
+        }
+      }
+    }, 1000)
   }
 }
 </script>

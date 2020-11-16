@@ -1,7 +1,7 @@
 <template>
   <q-page class="word" v-if="data">
     <div v-for = "(b, idx) in bs" :key = "idx">
-      <span v-for = "(y, i) in yindiao(w, b, data.h[idx].p)" :key="y.yin">
+      <span v-for = "(y, i) in yindiao(w, b, data.h[idx].p)" :key="y.yin + i">
         <h1>{{ y.w }}</h1>
         <span id ="b">
           <span class="yindiao">
@@ -102,16 +102,6 @@ export default {
       })
   },
   methods: {
-    deep () {
-      window.IS_GOOGLE_AFS_IFRAME_ = true
-      const cx = '007966820757635393756:sasf0rnevk4'
-      var gcse = document.createElement('script')
-      gcse.type = 'text/javascript'
-      gcse.async = true
-      gcse.src = "//www.google.com/cse/cse.js?cx=" + cx
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(gcse, s);
-    },
     play () {
       if (!this.playing) {
         document.getElementById('au').load()
