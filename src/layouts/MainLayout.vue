@@ -74,7 +74,7 @@ export default {
       setInterval(function () {
         var e = document.getElementById('gsc-i-id1')
         if (e) {
-          e.setAttribute('placeholder', '全站搜詢')
+          e.setAttribute('placeholder', '全站搜尋')
         }
       }, 500)
     },
