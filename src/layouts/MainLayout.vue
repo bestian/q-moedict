@@ -19,7 +19,6 @@
           </datalist>
           <button @click="$router.push('/w/' + myKey)">查詢</button>
         </q-toolbar-title>
-        <div class="gcse-search"></div>
       </q-toolbar>
     </q-header>
 
@@ -43,6 +42,7 @@
     </q-drawer>
 
     <q-page-container>
+      <div class="gcse-search"></div>
       <router-view @updateStars = "updateStars()" :stars="stars"/>
     </q-page-container>
   </q-layout>
