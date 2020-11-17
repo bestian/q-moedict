@@ -84,13 +84,13 @@ export default {
     }
   },
   props: ['stars'],
-  meta () {
+  /* meta () {
     return {
       // this accesses the "title" property in your Vue "data";
       // whenever "title" prop changes, your meta will automatically update
       title: this.w + ' - 萌典'
     }
-  },
+  }, */
   mounted () {
     this.w = '萌'
     this.$axios.get('https://www.moedict.tw/a/' + this.w + '.json')
