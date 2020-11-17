@@ -6,10 +6,10 @@
  */
 
 /* global workbox */
-import {precacheAndRoute} from 'workbox-precaching';
+import { precacheAndRoute } from 'workbox-precaching'
 // Your other import statements go here.
 
-precacheAndRoute(self.__WB_MANIFEST);
+precacheAndRoute(self.__WB_MANIFEST)
 // Your other SW code goes here.
 
 if (workbox) {
