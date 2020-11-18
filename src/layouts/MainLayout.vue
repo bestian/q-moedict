@@ -138,7 +138,7 @@ export default {
   }
 
   .icon {
-    height: 1em;
+    height: 1.2em;
   }
 
   .ellipsis {
