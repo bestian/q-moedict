@@ -5,6 +5,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
+      { path: 'w/', redirect: '/' },
       { path: 'w/:id', component: () => import('pages/Word.vue') }
     ]
   },
