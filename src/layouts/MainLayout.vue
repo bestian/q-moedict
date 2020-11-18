@@ -19,6 +19,9 @@
           </datalist>
           <button @click="$router.push('/w/' + myKey)">查詢</button>
         </q-toolbar-title>
+        <a href="https://www.github.com/bestian/q-moedict/" target="_blank">
+          <img class = "icon" src="../assets/github-icon.svg" title="Fork Me On Github" />
+        </a>
       </q-toolbar>
     </q-header>
 
@@ -125,6 +128,20 @@ export default {
 
 <style type="text/css">
   #s {
-    width: 140px !important;
+    width: 130px !important;
+  }
+
+  @media screen and (min-width: 420px) {
+    #s {
+      width: 250px !important;
+    }
+  }
+
+  .icon {
+    height: 1em;
+  }
+
+  .ellipsis {
+    text-overflow: inherit;
   }
 </style>
