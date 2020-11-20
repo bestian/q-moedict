@@ -112,6 +112,7 @@ export default {
           e.removeAttribute('data-ctorig')
           e.setAttribute('data-h', l)
           e.setAttribute('target', 'self')
+          e.setAttribute('rel', 'noreferrer')
           e.addEventListener('click', function () {
             console.log(this.getAttribute('data-h'))
             vm.$router.push('/w/' + this.getAttribute('data-h'))
