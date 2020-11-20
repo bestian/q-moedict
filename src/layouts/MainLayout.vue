@@ -13,6 +13,7 @@
 
         <q-toolbar-title>
           <input id="s" type="search" name="s" v-model="myKey" list="words" placeholder="輸入字詞" @keydown.enter="$router.push('/w/' + myKey)"/>
+          <label for="s"></label>
           <datalist id ="words">
             <option v-for = "d in has(data, myKey).slice(0,n)" :key="d" :value="d"></option>
             }
@@ -113,7 +114,8 @@ export default {
           e.setAttribute('data-h', l)
           e.setAttribute('target', 'self')
           e.setAttribute('rel', 'noreferrer')
-          e.addEventListener('click', function () {
+          e.addEventListener('click', function (event) {
+            event.preventDefault();
             console.log(this.getAttribute('data-h'))
             vm.$router.push('/w/' + this.getAttribute('data-h'))
             var x = document.getElementsByClassName('gsc-modal-background-image gsc-modal-background-image-visible')
