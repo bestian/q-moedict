@@ -21,7 +21,7 @@
           <button @click="$router.push('/w/' + myKey)">查詢</button>
         </q-toolbar-title>
         <a href="https://www.github.com/bestian/q-moedict/" target="_blank">
-          <img class = "icon" src="../assets/github-icon.svg" title="Fork Me On Github" />
+          <img class = "icon" src="../assets/github-icon.svg" title="Fork Me On Github" width="16" height="16" />
         </a>
       </q-toolbar>
     </q-header>
@@ -32,17 +32,14 @@
       bordered
       content-class="bg-grey-1"
     >
-    <q-infinite-scroll @load="onLoad" :offset="250"
-      :scroll-target="$refs.scrollTargetRef">
-      <q-list bordered>
-        <q-item>
-          <b>已加星號</b>
-        </q-item>
-        <q-item clickable v-for = "k in stars" :to = "'/w/' + k" :key="k">
-          {{k}}
-        </q-item>
-      </q-list>
-    </q-infinite-scroll>
+    <q-list bordered>
+      <q-item>
+        <b>已加星號</b>
+      </q-item>
+      <q-item clickable v-for = "k in stars" :to = "'/w/' + k" :key="k">
+        {{k}}
+      </q-item>
+    </q-list>
     </q-drawer>
 
     <q-page-container>
@@ -95,12 +92,12 @@ export default {
   },
   mounted () {
     var vm = this
+    this.deep()
     this.$axios.get('https://www.moedict.tw/a/index.json')
       .then((response) => {
         this.data = response.data
       })
     this.stars = this.$q.localStorage.getItem('words') || []
-    this.deep()
     setInterval(function () {
       var list = document.getElementsByClassName('gs-title')
       for (var i = 0; i < list.length; i++) {
