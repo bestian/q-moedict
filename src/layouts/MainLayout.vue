@@ -115,7 +115,7 @@ export default {
           e.setAttribute('target', 'self')
           e.setAttribute('rel', 'noreferrer')
           e.addEventListener('click', function (event) {
-            event.preventDefault();
+            event.preventDefault()
             console.log(this.getAttribute('data-h'))
             vm.$router.push('/w/' + this.getAttribute('data-h'))
             var x = document.getElementsByClassName('gsc-modal-background-image gsc-modal-background-image-visible')
