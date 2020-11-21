@@ -1,73 +1,79 @@
 <template>
-  <q-page class="word" v-if="data">
-    <div v-for = "(b, idx) in bs" :key = "idx">
-      <span v-for = "(y, i) in yindiao(w, b, data.h[idx].p)" :key="y.yin + i">
-        <h1>{{ y.w }}</h1>
-        <span id ="b">
-          <span class="yindiao">
-            <span class = "yin"> {{y.yin}} </span>
-            <span class = "diao"> {{y.diao}} </span>
+  <q-page class="word">
+    <div v-if="!err">
+      <div v-for = "(b, idx) in bs" :key = "idx">
+        <span v-for = "(y, i) in yindiao(w, bs[idx], data.h[idx].p, data.h[idx].T)" :key="i">
+          <h1>{{ y.w }}</h1>
+          <span id ="b">
+            <span class="yindiao">
+              <span class = "yin"> {{y.yin}} </span>
+              <span class = "diao"> {{y.diao}} </span>
+            </span>
+            <span class = "p" v-show="i == 0"> {{y.pin}} </span>
+            <span class = "p" v-show="i == 0"> {{y.T}}</span>
           </span>
-          <span class = "p" v-show="i == 0"> {{y.pin}} </span>
         </span>
-      </span>
 
-      <audio id="au" v-if = "data.h[idx]['=']">
-        <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.mp3'" type="audio/mp3"/>
-        <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
-      </audio>
+        <audio id="au" v-if = "data.h[idx]['=']">
+          <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.mp3'" type="audio/mp3"/>
+          <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
+        </audio>
 
-      <a id = "play" @click = "play()" v-if = "data.h[idx]['=']">
-        <q-icon name="play_arrow" v-if="!playing"/>
-        <q-icon name="pause" v-else/>
-      </a>
+        <a id = "play" @click = "play()" v-if = "data.h[idx]['=']">
+          <q-icon name="play_arrow" v-if="!playing"/>
+          <q-icon name="pause" v-else/>
+        </a>
 
-      <span v-if = "data.r">
-        <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
-      </span>
-      <a class ="star" v-if = "stars.indexOf(w) == -1" @click = "star(w)">
-        <q-icon name="star_outline" />
-      </a>
-      <a class ="star"  v-else @click="unstar(w)">
-        <q-icon name="star" />
-      </a>
-      <div v-if = "data">
-        <ol>
-          <li v-for = "d in data.h[idx].d" :key = "d.f">
-            <span v-if = "d.type">
-              <span class="type">{{ p(d.type)[0] }}</span>：
-            </span>
-            <span class="def" v-if = "d.f">
-              <router-link v-for = "(r, idx) in p(d.f)" :to = "'/w/' + r" :key = "r+idx" :disabled="dis(r)" :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
-            </span>
-            <div v-if = "d.e">
-              <div v-for = "e in d.e" :key="e">
-                <router-link v-for = "(r, idx) in p(e)" :to = "'/w/' + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
+        <span v-if = "data.r">
+          <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
+        </span>
+        <a class ="star" v-if = "stars.indexOf(w) == -1" @click = "star(w)">
+          <q-icon name="star_outline" />
+        </a>
+        <a class ="star"  v-else @click="unstar(w)">
+          <q-icon name="star" />
+        </a>
+        <div v-if = "data">
+          <ol>
+            <li v-for = "d in data.h[idx].d" :key = "d.f">
+              <span v-if = "d.type">
+                <span class="type">{{ p(d.type)[0] }}</span>：
+              </span>
+              <span class="def" v-if = "d.f">
+                <router-link v-for = "(r, idx) in p(d.f)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)" :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
+              </span>
+              <div v-if = "d.e">
+                <div v-for = "e in d.e" :key="e">
+                  <router-link v-for = "(r, idx) in p(e)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
+                </div>
               </div>
-            </div>
-            <br/>
-            <ol>
-              <li v-for = "q in d.q" :key="q">
-                <router-link v-for = "(r, idx) in p(q)" :to = "'/w/' + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
-              </li>
-            </ol>
-            <span class="antonyms" v-if = "d.a">
-              <span class="type">反</span>
-                <router-link v-for = "(r, idx) in p(d.a)" :to = "'/w/' + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
-            </span>
-            <br/>
-          </li>
-        </ol>
+              <br/>
+              <ol>
+                <li v-for = "q in d.q" :key="q">
+                  <router-link v-for = "(r, idx) in p(q)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
+                </li>
+              </ol>
+              <span class="antonyms" v-if = "d.a">
+                <span class="type">反</span>
+                  <router-link v-for = "(r, idx) in p(d.a)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
+              </span>
+              <br/>
+            </li>
+          </ol>
+        </div>
+        <span class="antonyms" v-if = "data.English">
+          <span class="type">英</span> {{data.English}}<br/>
+        </span>
+        <span class="antonyms" v-if = "data.Deutsch">
+          <span class="type">德</span> {{data.Deutsch}}<br/>
+        </span>
+        <span class="antonyms" v-if = "data.francais">
+          <span class="type">法</span> {{data.francais}}<br/>
+        </span>
       </div>
-      <span class="antonyms" v-if = "data.English">
-        <span class="type">英</span> {{data.English}}<br/>
-      </span>
-      <span class="antonyms" v-if = "data.Deutsch">
-        <span class="type">德</span> {{data.Deutsch}}<br/>
-      </span>
-      <span class="antonyms" v-if = "data.francais">
-        <span class="type">法</span> {{data.francais}}<br/>
-      </span>
+    </div>
+    <div v-else>
+      對不起，找不到你要查詢的條目
     </div>
   </q-page>
 </template>
@@ -80,28 +86,61 @@ export default {
       w: '',
       bs: [],
       data: null,
-      playing: false
+      playing: false,
+      pre: '',
+      title: '萌典',
+      url: 'a',
+      err: false
     }
   },
   props: ['stars'],
-  /* meta () {
+  meta () {
     return {
       // this accesses the "title" property in your Vue "data";
       // whenever "title" prop changes, your meta will automatically update
-      title: this.w + ' - 萌典'
+      title: this.w + ' - ' + this.title
     }
-  }, */
+  },
   mounted () {
-    this.w = '萌'
-    this.$axios.get('https://www.moedict.tw/a/' + this.w + '.json')
-      .then((response) => {
-        this.data = response.data
-        console.log(this.data)
-        this.bs = this.data.h.map((o) => { return o.b })
-        this.playing = false
-      })
+    this.set('萌')
   },
   methods: {
+    set (k) {
+      this.w = k || this.$route.params.id
+      this.pre = ''
+      this.url = 'a'
+      this.title = '萌典'
+      if (this.w.match(/^(~)/)) {
+        this.pre = '~'
+        this.url = 'c'
+        this.title = '兩岸萌典'
+        this.w = this.w.replace('~', '')
+      }
+      if (this.w.match(/^(')/)) {
+        this.pre = '\''
+        this.url = 't'
+        this.title = '台灣閩南語'
+        this.w = this.w.replace('\'', '')
+      }
+      if (this.w.match(/^(:)/)) {
+        this.pre = ':'
+        this.url = 'h'
+        this.title = '台灣閩南語'
+        this.w = this.w.replace(':', '')
+      }
+      this.$axios.get('https://www.moedict.tw/' + this.url + '/' + this.w + '.json')
+        .then((response) => {
+          this.err = false
+          this.data = response.data
+          console.log(this.data)
+          this.bs = this.data.h.map((o) => { return o.b || '' })
+          this.playing = false
+        }).catch(err => {
+          this.err = true
+          console.log(err)
+        })
+      this.$forceUpdate()
+    },
     play () {
       if (!this.playing) {
         document.getElementById('au').load()
@@ -127,25 +166,43 @@ export default {
       this.$q.localStorage.set('words', arr)
       this.$emit('updateStars')
     },
-    yindiao (w, b, p) {
+    yindiao (w, b, p, T) {
       var word = w
-      var arr = ('' + b).split('　')
-      return arr.map((k, idx) => {
-        k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
-        var obj = {
-          w: word[idx],
-          yin: k.substr(0, k.length - 1),
-          diao: k.substr(k.length - 1, k.length),
-          pin: p
-        }
-
-        if (obj.diao !== 'ˋ' && obj.diao !== 'ˊ' && obj.diao !== 'ˇ' && obj.diao !== 'ˊ') {
-          obj.yin = obj.yin + obj.diao
-          obj.diao = ''
-        }
-
-        return obj
-      })
+      var arr
+      if (b) {
+        arr = ('' + b).split('　')
+        return arr.map((k, idx) => {
+          k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
+          var obj = {
+            w: word[idx],
+            yin: k.substr(0, k.length - 1),
+            diao: k.substr(k.length - 1, k.length),
+            pin: p.replace(/\s/g, '　　　'),
+            T: T
+          }
+          if (obj.diao !== 'ˋ' && obj.diao !== 'ˊ' && obj.diao !== 'ˇ' && obj.diao !== 'ˊ') {
+            obj.yin = obj.yin + obj.diao
+            obj.diao = ''
+          }
+          return obj
+        })
+      } else {
+        return w.split('').map((k, idx) => {
+          k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
+          var obj = {
+            w: word[idx],
+            pin: p && p.replace('四⃞', '四')
+              .replace('海⃞', '海')
+              .replace('海⃞', '海')
+              .replace('大⃞', '大')
+              .replace('平⃞', '平')
+              .replace('安⃞', '安')
+              .replace('南⃞', '南'),
+            T: T
+          }
+          return obj
+        })
+      }
     },
     dis (w) {
       return w.match(/(⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|从|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|．|、|。|；|「|」|『|』|（|）|\(|\)|，)/)
@@ -164,7 +221,7 @@ export default {
         .replace(/{\[8e7a\]}/g, '☷')
         .replace(/{\[9264\]}/g, '灾')
         .replace(/{\[9064\]}/g, '从')
-      var arr = [...a.matchAll(/(⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|从|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|．|、|。|；|「|」|『|』|（|）|\(|\)|，|`(.+?)~)/g)].map((o) => {
+      var arr = [...a.matchAll(/(⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|从|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|．|、|。|；|「|」|『|』|（|）|\(|\)|，|,|`(.+?)~)/g)].map((o) => {
         const w = o.filter((k) => { return k })
         // console.log(w)
         return w[w.length - 1]
@@ -174,15 +231,7 @@ export default {
   },
   watch: {
     $route (to, from) {
-      this.w = this.$route.params.id
-      this.$axios.get('https://www.moedict.tw/a/' + this.w + '.json')
-        .then((response) => {
-          this.data = response.data
-          console.log(this.data)
-          this.bs = this.data.h.map((o) => { return o.b })
-          this.playing = false
-        })
-      this.$forceUpdate()
+      this.set()
     }
   }
 }
@@ -206,7 +255,6 @@ export default {
     top: .9em;
     display: inline-block;
     font-size: 24px;
-    line-height: 100%;
     width: 1em;
     height: 4em;
     overflow: visible;
@@ -263,7 +311,7 @@ export default {
     bottom: 2.2em;
     left: -2.5em;
     color: gray;
-    width: 10em;
+    width: 40em;
   }
 
 </style>

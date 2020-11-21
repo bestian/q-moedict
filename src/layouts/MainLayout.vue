@@ -33,6 +33,10 @@
       content-class="bg-grey-1"
     >
     <q-list bordered>
+      <q-item clickable to = "/w/萌">國語萌典</q-item>
+      <q-item clickable to = "/w/~萌">兩岸萌典</q-item>
+      <q-item clickable to = "/w/'發穎">臺灣閩南語</q-item>
+      <q-item clickable to = "/w/:發芽">臺灣客家語</q-item>
       <q-item>
         <b>已加星號</b>
       </q-item>
