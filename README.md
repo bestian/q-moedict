@@ -7,6 +7,12 @@ A Quasar Framework app
 yarn
 ```
 
+or
+
+```bash
+npm i
+```
+
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
 quasar dev
