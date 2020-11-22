@@ -325,7 +325,7 @@ export default {
   }
 
   .antonyms {
-    border-bottom: 6px solid gray;
+    border-bottom: 6px solid #ccc;
   }
 
 </style>
