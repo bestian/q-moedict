@@ -20,3 +20,17 @@ a {
 @font-face {
   font-display: swap;
 }
+
+.print-only {
+	display: none;
+}
+
+@media print {
+	.no-print {
+		display: none !important;
+		visibility: hidden !important;
+	}
+	.print-only {
+		display: block !important;
+	}
+}

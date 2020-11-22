@@ -19,7 +19,7 @@
           <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
         </audio>
 
-        <a id = "play" @click = "play()" v-if = "data.h[idx]['=']">
+        <a class = "no-print" id = "play" @click = "play()" v-if = "data.h[idx]['=']">
           <q-icon name="play_arrow" v-if="!playing"/>
           <q-icon name="pause" v-else/>
         </a>
@@ -27,11 +27,14 @@
         <span v-if = "data.r">
           <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
         </span>
-        <a class ="star" v-if = "stars.indexOf(w) == -1" @click = "star(w)">
+        <a class ="star" v-if = "stars.indexOf(pre + w) == -1" @click = "star(pre + w)">
           <q-icon name="star_outline" />
         </a>
-        <a class ="star"  v-else @click="unstar(w)">
+        <a class ="star"  v-else @click="unstar(pre + w)">
           <q-icon name="star" />
+        </a>
+        <a class="print no-print" onclick="window.print()">
+          <q-icon name="print" />
         </a>
         <div v-if = "data">
           <ol>
@@ -72,8 +75,11 @@
         </span>
       </div>
     </div>
-    <div v-else>
+    <div v-else class = "no-print">
       對不起，找不到你要查詢的條目
+    </div>
+    <div class="print-only">
+      <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://www.moedict.tw/' + pre + w + '&choe=UTF-8'" />
     </div>
   </q-page>
 </template>
@@ -312,6 +318,10 @@ export default {
     left: -2.5em;
     color: gray;
     width: 40em;
+  }
+
+  .print {
+    margin-left: 1em;
   }
 
 </style>

@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class = "no-print">
       <q-toolbar>
         <q-btn
           flat
@@ -31,6 +31,7 @@
       show-if-above
       bordered
       content-class="bg-grey-1"
+      class = "no-print"
     >
     <q-list bordered>
       <q-item clickable to = "/w/萌">國語萌典</q-item>
@@ -47,7 +48,7 @@
     </q-drawer>
 
     <q-page-container>
-      <div class="gcse-search"></div>
+      <div class="gcse-search no-print"></div>
       <router-view @updateStars = "updateStars()" :stars="stars"/>
     </q-page-container>
   </q-layout>
