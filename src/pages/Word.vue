@@ -160,7 +160,7 @@ export default {
     star (w) {
       var arr = this.$q.localStorage.getItem('words')
       if (!arr) { arr = [] }
-      arr = arr.filter((x) => { return x !== this.w })
+      arr = arr.filter((x) => { return x !== w })
       arr.push(w)
       this.$q.localStorage.set('words', arr)
       this.$emit('updateStars')
@@ -168,7 +168,7 @@ export default {
     unstar (w) {
       var arr = this.$q.localStorage.getItem('words')
       if (!arr) { arr = [] }
-      arr = arr.filter((x) => { return x !== this.w })
+      arr = arr.filter((x) => { return x !== w })
       this.$q.localStorage.set('words', arr)
       this.$emit('updateStars')
     },
@@ -211,7 +211,7 @@ export default {
       }
     },
     dis (w) {
-      return w.match(/(\s|⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|从|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|!|-|"￹|ū|á|í|[a-z]|．|、|。|；|「|」|『|』|（|）|\(|\)|，|,|`(.+?)~)/)
+      return w.match(/(\s|⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|从|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|!|-|"￹|â|à|á|a̍|ā|ī|î|ì|í|ū|ú|ù|û|ê|e̍|è|é|ē|ô|ō|ó|ò|ǹ|ń|n̂|[a-z]|．|、|。|；|「|」|『|』|（|）|\(|\)|，|,|`(.+?)~)/)
     },
     p (s) {
       var a = s
@@ -228,7 +228,7 @@ export default {
         .replace(/{\[9264\]}/g, '灾')
         .replace(/{\[9064\]}/g, '从')
         .replace(/\s/g, '　')
-      var arr = [...a.matchAll(/(\s|⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|从|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|!|-|"￹|ū|á|í|[a-z]|．|、|。|；|「|」|『|』|（|）|\(|\)|，|,|`(.+?)~)/g)].map((o) => {
+      var arr = [...a.matchAll(/(\s|⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|从|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|!|-|"￹|â|à|á|a̍|ā|ī|î|ì|í|ū|ú|ù|û|ê|e̍|è|é|ē|ô|ō|ó|ò|ǹ|ń|n̂|[a-z]|．|、|。|；|「|」|『|』|（|）|\(|\)|，|,|`(.+?)~)/g)].map((o) => {
         const w = o.filter((k) => { return k })
         // console.log(w)
         return w[w.length - 1]
