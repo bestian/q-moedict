@@ -324,4 +324,8 @@ export default {
     margin-left: 1em;
   }
 
+  .antonyms {
+    border-bottom: 6px solid gray;
+  }
+
 </style>
