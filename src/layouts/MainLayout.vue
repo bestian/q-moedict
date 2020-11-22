@@ -48,7 +48,7 @@
     </q-drawer>
 
     <q-page-container>
-      <div class="gcse-search no-print"></div>
+      <div class="gcse-search"></div>
       <router-view @updateStars = "updateStars()" :stars="stars"/>
     </q-page-container>
   </q-layout>
