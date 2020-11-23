@@ -36,10 +36,10 @@
         <a class="print no-print" onclick="window.print()">
           <q-icon name="print" />
         </a>
-        <a class="si no-print" v-if = "!si" @click="si = true">
+        <a class="si no-print" v-if = "!si" @click="s1(true)">
           簡
         </a>
-        <a class="ti no-print" v-else @click="si = false">
+        <a class="ti no-print" v-else @click="s1(false)">
           正
         </a>
         <div v-if = "data">
@@ -130,8 +130,8 @@ export default {
     },
     s1 (s) {
       var si = this.$q.localStorage.getItem('si')
+      si = s
       if (!si) { si = false }
-      si = s || si
       this.si = si
       this.$q.localStorage.set('si', si)
       this.$emit('updateSi')
@@ -264,9 +264,6 @@ export default {
   watch: {
     $route (to, from) {
       this.set()
-    },
-    si (to, from) {
-      this.s1(to)
     }
   }
 }
