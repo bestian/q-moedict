@@ -27,7 +27,7 @@ a {
 }
 
 @media print {
-	.no-print {
+	.no-print, .gsc-control-cse {
 		display: none !important;
 		visibility: hidden !important;
 	}
