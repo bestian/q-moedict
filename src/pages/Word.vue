@@ -319,6 +319,14 @@ export default {
     left: -2.5em;
     color: gray;
     width: 90vw;
+    overflow: visible;
+    height: 1em;
+  }
+
+  @media screen and (max-width: 600px) {
+    .p {
+      font-size: .5em;
+    }
   }
 
   .print {
