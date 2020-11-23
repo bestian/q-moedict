@@ -12,13 +12,13 @@
         />
 
         <q-toolbar-title>
-          <input id="s" type="search" name="s" v-model="myKey" list="words" placeholder="輸入字詞" @keydown.enter="$router.push('/w/' + myKey)"/>
+          <input id="s" type="search" name="s" v-model="myKey" list="words" :placeholder="s('輸入字詞')" @keydown.enter="$router.push('/w/' + myKey)"/>
           <label for="s"></label>
           <datalist id ="words">
             <option v-for = "d in has(data, myKey).slice(0,n)" :key="d" :value="d"></option>
             }
           </datalist>
-          <button @click="$router.push('/w/' + myKey)">查詢</button>
+          <button @click="$router.push('/w/' + myKey)">{{ s('查詢') }}</button>
         </q-toolbar-title>
         <a href="https://www.github.com/bestian/q-moedict/" target="_blank">
           <img class = "icon" src="../assets/github-icon.svg" title="Fork Me On Github" width="16" height="16" />
@@ -34,27 +34,28 @@
       class = "no-print"
     >
     <q-list bordered>
-      <q-item clickable to = "/w/萌">國語萌典</q-item>
-      <q-item clickable to = "/w/~萌">兩岸萌典</q-item>
-      <q-item clickable to = "/w/'發穎">臺灣閩南語</q-item>
-      <q-item clickable to = "/w/:發芽">臺灣客家語</q-item>
+      <q-item clickable to = "/w/萌">{{ s('國語萌典') }}</q-item>
+      <q-item clickable to = "/w/~萌">{{ s('兩岸萌典') }}</q-item>
+      <q-item clickable to = "/w/'發穎">{{ s('臺灣閩南語') }}</q-item>
+      <q-item clickable to = "/w/:發芽">{{ s('臺灣客家語') }}</q-item>
       <q-item>
-        <b>已加星號</b>
+        <b>{{ s('已加星號') }}</b>
       </q-item>
       <q-item clickable v-for = "k in stars" :to = "'/w/' + k" :key="k">
-        {{k}}
+        {{s(k)}}
       </q-item>
     </q-list>
     </q-drawer>
 
     <q-page-container>
       <div class="gcse-search"></div>
-      <router-view @updateStars = "updateStars()" :stars="stars"/>
+      <router-view @updateStars = "updateStars()" @updateSi = "s1" :stars="stars"/>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
+import { sify } from 'chinese-conv'
 
 export default {
   name: 'MainLayout',
@@ -64,11 +65,28 @@ export default {
       data: [],
       stars: [],
       leftDrawerOpen: false,
-      n: 100
+      n: 100,
+      si: false
     }
   },
   methods: {
+    s (t) {
+      if (this.si) {
+        return sify(t)
+      } else {
+        return t
+      }
+    },
+    s1 () {
+      console.log('S1')
+      var si = this.$q.localStorage.getItem('si')
+      console.log(si)
+      if (!si) { si = false }
+      this.si = si
+      this.$q.localStorage.set('si', si)
+    },
     deep () {
+      var p = this.s('全站搜尋')
       window.IS_GOOGLE_AFS_IFRAME_ = true
       const cx = '007966820757635393756:sasf0rnevk4'
       var gcse = document.createElement('script')
@@ -80,7 +98,7 @@ export default {
       setInterval(function () {
         var e = document.getElementById('gsc-i-id1')
         if (e) {
-          e.setAttribute('placeholder', '全站搜尋')
+          e.setAttribute('placeholder', p)
         }
       }, 500)
     },
@@ -96,6 +114,7 @@ export default {
     }
   },
   mounted () {
+    this.s1()
     var vm = this
     this.deep()
     this.$axios.get('https://www.moedict.tw/a/index.json')

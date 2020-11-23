@@ -36,29 +36,35 @@
         <a class="print no-print" onclick="window.print()">
           <q-icon name="print" />
         </a>
+        <a class="si no-print" v-if = "!si" @click="si = true">
+          簡
+        </a>
+        <a class="ti no-print" v-else @click="si = false">
+          正
+        </a>
         <div v-if = "data">
           <ol>
             <li v-for = "d in data.h[idx].d" :key = "d.f">
               <span v-if = "d.type">
-                <span class="type">{{ p(d.type)[0] }}</span>：
+                <span class="type">{{ s(p(d.type)[0]) }}</span>：
               </span>
               <span class="def" v-if = "d.f">
-                <router-link v-for = "(r, idx) in p(d.f)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)" :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
+                <router-link v-for = "(r, idx) in p(d.f)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)" :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
               </span>
               <div v-if = "d.e">
                 <div v-for = "e in d.e" :key="e">
-                  <router-link v-for = "(r, idx) in p(e)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
+                  <router-link v-for = "(r, idx) in p(e)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
                 </div>
               </div>
               <br/>
               <ol>
                 <li v-for = "q in d.q" :key="q">
-                  <router-link v-for = "(r, idx) in p(q)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
+                  <router-link v-for = "(r, idx) in p(q)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
                 </li>
               </ol>
               <span class="antonyms" v-if = "d.a">
                 <span class="type">反</span>
-                  <router-link v-for = "(r, idx) in p(d.a)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ r }}</router-link>
+                  <router-link v-for = "(r, idx) in p(d.a)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
               </span>
               <br/>
             </li>
@@ -85,7 +91,7 @@
 </template>
 
 <script>
-import { tify, sify } from 'chinese-conv'
+import { sify } from 'chinese-conv'
 
 export default {
   name: 'PageIndex',
@@ -98,7 +104,8 @@ export default {
       pre: '',
       title: '萌典',
       url: 'a',
-      err: false
+      err: false,
+      si: false
     }
   },
   props: ['stars'],
@@ -111,13 +118,24 @@ export default {
   },
   mounted () {
     this.set('萌')
-    const text = tify('所谓知己知彼百战不殆，作为星际2职业选手，他们在平时练习中不仅要练好自己的本族，还会经常选择其他两个族进行练习，这样可以更加了解本族之外两个种族的运营流程、弱点、真空期等。因此不只有Flash，全世界许多职业选手都会在练习时偶尔使用下别的种族，这也是他们众多练习手段的一种。')
-
-    console.log(sify('漢字'))
-
-    console.log(text)
+    this.s1(false)
   },
   methods: {
+    s (t) {
+      if (this.si) {
+        return sify(t)
+      } else {
+        return t
+      }
+    },
+    s1 (s) {
+      var si = this.$q.localStorage.getItem('si')
+      if (!si) { si = false }
+      si = s
+      this.si = si
+      this.$q.localStorage.set('si', si)
+      this.$emit('updateSi')
+    },
     set (k) {
       this.w = k || this.$route.params.id
       this.pre = ''
@@ -246,6 +264,9 @@ export default {
   watch: {
     $route (to, from) {
       this.set()
+    },
+    si (to, from) {
+      this.s1(to)
     }
   }
 }
