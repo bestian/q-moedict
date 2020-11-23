@@ -318,7 +318,7 @@ export default {
     bottom: 2.2em;
     left: -2.5em;
     color: gray;
-    width: 40em;
+    width: 90vw;
   }
 
   .print {
