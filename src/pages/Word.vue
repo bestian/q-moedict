@@ -9,8 +9,8 @@
               <span class = "yin"> {{y.yin}} </span>
               <span class = "diao"> {{y.diao}} </span>
             </span>
-            <span class = "p" v-show="i == 0"> {{y.pin}} </span>
-            <span class = "p" v-show="i == 0"> {{y.T}}</span>
+            <span class = "p" v-show="i == 0" :class="{ hakka: pre == ':'}"> {{y.pin}} </span>
+            <span class = "p" v-show="i == 0" :class="{ hakka: pre == ':'}"> {{y.T}}</span>
           </span>
         </span>
 
@@ -348,9 +348,13 @@ export default {
     height: 1em;
   }
 
+  .p.hakka {
+    font-size: .5em;
+  }
+
   @media screen and (max-width: 600px) {
     .p {
-      font-size: .5em;
+       /* font-size: .5em; */
     }
   }
 
