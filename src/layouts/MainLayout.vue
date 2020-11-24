@@ -107,6 +107,9 @@ export default {
     },
     has (data, k) {
       // console.log(data)
+      if (!k) {
+        return []
+      }
       return data.filter((x) => { return x.indexOf(k) > -1 })
     },
     updateStars () {
