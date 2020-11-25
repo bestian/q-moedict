@@ -211,7 +211,7 @@ export default {
             w: word[idx],
             yin: k.substr(0, k.length - 1),
             diao: k.substr(k.length - 1, k.length),
-            pin: p.replace(/\s/g, '　　　'),
+            pin: p.replace(/\s/g, '　'),
             T: T
           }
           if (obj.diao !== 'ˋ' && obj.diao !== 'ˊ' && obj.diao !== 'ˇ' && obj.diao !== 'ˊ') {
