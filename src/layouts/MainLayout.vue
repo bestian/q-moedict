@@ -12,13 +12,13 @@
         />
 
         <q-toolbar-title>
-          <input id="s" type="search" name="s" v-model="myKey" list="words" :placeholder="s('輸入字詞')" @keydown.enter="$router.push('/w/' + myKey)"/>
+          <input id="s" type="search" name="s" v-model="myKey" list="words" :placeholder="s('輸入字詞')" @keydown.enter="$router.push('/w/' + pre + myKey)"/>
           <label for="s"></label>
           <datalist id ="words">
             <option v-for = "d in has(data, myKey).slice(0,n)" :key="d" :value="d"></option>
             }
           </datalist>
-          <button @click="$router.push('/w/' + myKey)">{{ s('查詢') }}</button>
+          <button @click="$router.push('/w/' + pre + myKey)">{{ s('查詢') }}</button>
         </q-toolbar-title>
         <a href="https://www.github.com/bestian/q-moedict/" target="_blank">
           <img class = "icon" src="../assets/github-icon.svg" title="Fork Me On Github" width="16" height="16" />
@@ -49,7 +49,7 @@
 
     <q-page-container>
       <div class="gcse-search"></div>
-      <router-view @updateStars = "updateStars()" @updateSi = "s1" :stars="stars"/>
+      <router-view @updateStars = "updateStars" @updateSi = "s1" @pre1="pre1" :stars="stars"/>
     </q-page-container>
   </q-layout>
 </template>
@@ -62,6 +62,8 @@ export default {
   data () {
     return {
       myKey: '',
+      pre: '',
+      url: 'a',
       data: [],
       stars: [],
       leftDrawerOpen: false,
@@ -70,6 +72,16 @@ export default {
     }
   },
   methods: {
+    pre1 (p, u) {
+      p = this.$q.localStorage.getItem('pre') || p || ''
+      u = this.$q.localStorage.getItem('url') || u || ''
+      this.pre = p
+      this.url = u
+      this.$axios.get('https://www.moedict.tw/' + this.url + '/index.json')
+        .then((response) => {
+          this.data = response.data
+        })
+    },
     s (t) {
       if (this.si) {
         return sify(t)
@@ -78,7 +90,6 @@ export default {
       }
     },
     s1 () {
-      console.log('S1')
       var si = this.$q.localStorage.getItem('si')
       console.log(si)
       if (!si) { si = false }
@@ -120,7 +131,7 @@ export default {
     this.s1()
     var vm = this
     this.deep()
-    this.$axios.get('https://www.moedict.tw/a/index.json')
+    this.$axios.get('https://www.moedict.tw/' + this.url + '/index.json')
       .then((response) => {
         this.data = response.data
       })

@@ -159,6 +159,9 @@ export default {
         this.title = '台灣閩南語'
         this.w = this.w.replace(':', '')
       }
+      this.$q.localStorage.set('pre', this.pre)
+      this.$q.localStorage.set('url ', this.url)
+      this.$emit('pre1', this.pre, this.url)
       this.$axios.get('https://www.moedict.tw/' + this.url + '/' + this.w + '.json')
         .then((response) => {
           this.err = false
