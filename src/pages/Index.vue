@@ -117,7 +117,20 @@ export default {
     }
   },
   mounted () {
-    this.set('萌')
+    this.pre = this.$q.localStorage.getItem('pre') || this.pre
+    this.url = this.$q.localStorage.getItem('url') || this.url
+    if (this.pre === '~') {
+      this.set('~萌')
+    }
+    if (this.pre === '\'') {
+      this.set('\'發穎')
+    }
+    if (this.pre === ':') {
+      this.set(':發芽')
+    }
+    if (this.pre === '') {
+      this.set('萌')
+    }
     this.s1()
   },
   methods: {
