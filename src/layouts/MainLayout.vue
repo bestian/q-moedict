@@ -34,10 +34,59 @@
       class = "no-print"
     >
     <q-list bordered>
-      <q-item clickable to = "/w/萌">{{ s('國語萌典') }}</q-item>
-      <q-item clickable to = "/w/~萌">{{ s('兩岸萌典') }}</q-item>
-      <q-item clickable to = "/w/'發穎">{{ s('臺灣閩南語') }}</q-item>
-      <q-item clickable to = "/w/:發芽">{{ s('臺灣客家語') }}</q-item>
+      <q-btn-dropdown rounded color="primary" label="分類詞典">
+        <q-list>
+          <q-item clickable v-close-popup to = "/w/萌">{{ s('國語萌典') }}</q-item>
+          <q-item clickable v-close-popup to = "/w/~萌">{{ s('兩岸萌典') }}</q-item>
+          <q-item clickable v-close-popup to = "/w/'發穎">{{ s('臺灣閩南語') }}</q-item>
+          <q-item clickable v-close-popup to = "/w/:發芽">{{ s('臺灣客家語') }}</q-item>
+        </q-list>
+      </q-btn-dropdown>
+      <br/>
+      <q-btn-dropdown rounded color="secondary" label="分類搜尋">
+        <q-list>
+          <q-item clickable v-close-popup @click="$router.push('/list/成語')">
+            <q-item-section>
+              <q-item-label>{{ s('成語')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="$router.push('/list/諺語')">
+            <q-item-section>
+              <q-item-label>{{ s('諺語')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="$router.push('/list/歇後語')">
+            <q-item-section>
+              <q-item-label>{{ s('歇後語')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="$router.push('/list/音譯')">
+            <q-item-section>
+              <q-item-label>{{ s('外來語-音譯')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="$router.push('/list/音譯')">
+            <q-item-section>
+              <q-item-label>{{ s('外來語-音譯')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="$router.push('/list/義譯')">
+            <q-item-section>
+              <q-item-label>{{ s('外來語-義譯')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="$router.push('/list/音義合譯')">
+            <q-item-section>
+              <q-item-label>{{ s('外來語-音義合譯')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup @click="$router.push('/list/無法考證者')">
+            <q-item-section>
+              <q-item-label>{{ s('外來語-無法考證者')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
       <q-item>
         <b>{{ s('已加星號') }}</b>
       </q-item>

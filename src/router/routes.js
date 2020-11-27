@@ -6,7 +6,9 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') },
       { path: 'w/', redirect: '/' },
-      { path: 'w/:id', component: () => import('pages/Word.vue') }
+      { path: 'w/:id', component: () => import('pages/Word.vue') },
+      { path: 'list', redirect: 'list/成語' },
+      { path: 'list/:id', component: () => import('pages/List.vue') }
     ]
   },
 
