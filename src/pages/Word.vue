@@ -348,7 +348,7 @@ export default {
     bottom: 2.2em;
     left: -2.5em;
     color: gray;
-    width: 90vw;
+    width: 70vw;
     overflow: visible;
     height: 1em;
   }
