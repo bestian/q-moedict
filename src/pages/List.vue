@@ -15,7 +15,7 @@
 import { sify } from 'chinese-conv'
 
 export default {
-  name: 'PageIndex',
+  name: 'List',
   data () {
     return {
       myKey: '',

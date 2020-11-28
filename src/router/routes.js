@@ -7,6 +7,7 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') },
       { path: 'w/', redirect: '/' },
       { path: 'w/:id', component: () => import('pages/Word.vue') },
+      { path: 'about', component: () => import('pages/About.vue') },
       { path: 'list', redirect: 'list/成語' },
       { path: 'list/:id', component: () => import('pages/List.vue') }
     ]
