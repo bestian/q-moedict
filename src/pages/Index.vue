@@ -87,6 +87,21 @@
     <div class="print-only">
       <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://www.moedict.tw/' + pre + w + '&choe=UTF-8'" />
     </div>
+    <br/>
+    <div class = "soc">
+      <q-btn size="xs" color = "primary" class="facebook">
+        <a :href="'https://www.facebook.com/sharer/sharer.php?u=https://bestian.github.io/q-moedict/w/'+ w">
+          <q-icon name = "fas fa-share-square" />
+          <q-icon name = "fab fa-facebook-f" />
+        </a>
+      </q-btn>
+      <q-btn size="xs" color = "secondary" class="twitter">
+        <a :href="'https://twitter.com/share?text=' + w + '&url=https://bestian.github.io/q-moedict/w/'+ w">
+          <q-icon name = "fas fa-share-square" />
+          <q-icon name = "fab fa-twitter" />
+        </a>
+      </q-btn>
+    </div>
   </q-page>
 </template>
 
@@ -380,6 +395,19 @@ export default {
 
   .antonyms {
     border-bottom: 6px solid #ccc;
+  }
+
+  .soc {
+    width: 100%;
+    text-align: right;
+  }
+
+  .soc .q-btn {
+    margin: 0 1em;
+  }
+
+  .soc .q-icon {
+    color: white;
   }
 
 </style>
