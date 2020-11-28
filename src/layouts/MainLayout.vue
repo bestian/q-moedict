@@ -36,7 +36,7 @@
     >
     <q-list bordered>
       <q-item clickable v-close-popup to = "/about">{{ s('關於本站') }}</q-item>
-      <q-item clickable v-close-popup onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
+      <q-item clickable v-close-popup @click="leftDrawerOpen = false" onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
       <q-btn size = "lg" label="分類辭典">
         <q-icon name = "arrow_drop_down" />
         <q-menu>
@@ -107,7 +107,7 @@
 
     <q-page-container>
       <div class="gcse-search"></div>
-      <router-view @updateStars = "updateStars" @updateSi = "s1" @pre1="pre1" :stars="stars"/>
+      <router-view @updateStars = "updateStars" @updateSi = "s1" @pre1="pre1" :stars="stars" @closeD = "closeD"/>
     </q-page-container>
   </q-layout>
 </template>
@@ -130,6 +130,9 @@ export default {
     }
   },
   methods: {
+    closeD () {
+      this.leftDrawerOpen = false
+    },
     pre1 (p, u) {
       p = this.$q.localStorage.getItem('pre') || p || ''
       u = this.$q.localStorage.getItem('url') || u || ''

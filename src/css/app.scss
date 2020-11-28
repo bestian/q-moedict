@@ -27,6 +27,11 @@ a {
 }
 
 @media print {
+
+    @page {
+    	size: A4 landscape;
+    }
+
 	.no-print, .gsc-control-cse {
 		display: none !important;
 		visibility: hidden !important;
@@ -35,6 +40,6 @@ a {
 		display: block !important;
 	}
 	.q-page {
-        width: 100vw;
+        width: 100% !important;
     }
 }

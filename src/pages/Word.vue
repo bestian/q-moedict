@@ -33,7 +33,7 @@
         <a class ="star"  v-else @click="unstar(pre + w)">
           <q-icon name="star" />
         </a>
-        <a class="print no-print" onclick="window.print()">
+        <a class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
           <q-icon name="print" />
         </a>
         <a class="si no-print" v-if = "!si" @click="s1(true)">
@@ -137,6 +137,9 @@ export default {
     this.s1()
   },
   methods: {
+    closeD () {
+      this.$emit('closeD')
+    },
     s (t) {
       if (this.si) {
         return sify(t)
