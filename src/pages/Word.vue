@@ -101,12 +101,6 @@
           <q-icon name = "fab fa-twitter" />
         </a>
       </q-btn>
-      <q-btn size="xs" color = "negative" class="g+">
-        <a href="">
-          <q-icon name = "fas fa-share-square" />
-          <q-icon name = "fab fa-google-plus-g" />
-        </a>
-      </q-btn>
     </div>
   </q-page>
 </template>
