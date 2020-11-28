@@ -32,6 +32,7 @@
       bordered
       content-class="bg-grey-1"
       class = "no-print"
+      :width = "200"
     >
     <q-list bordered>
       <q-item clickable v-close-popup onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
