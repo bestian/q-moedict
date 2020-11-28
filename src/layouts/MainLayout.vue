@@ -36,7 +36,7 @@
     >
     <q-list bordered>
       <q-item clickable v-close-popup onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
-      <q-btn label="分類辭典">
+      <q-btn size = "lg" label="分類辭典">
         <q-icon name = "arrow_drop_down" />
         <q-menu>
           <q-list>
@@ -48,7 +48,8 @@
         </q-menu>
       </q-btn>
       <br/>
-    <q-btn label="分類搜尋">
+    <q-btn size = "lg" label="分類搜尋">
+      <q-icon name = "arrow_drop_down" />
       <q-menu>
         <q-list>
           <q-item clickable v-close-popup @click="$router.push('/list/成語')">
