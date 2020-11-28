@@ -37,6 +37,7 @@
     <q-list bordered>
       <q-item clickable v-close-popup onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
       <q-btn label="分類辭典">
+        <q-icon name = "arrow_drop_down" />
         <q-menu>
           <q-list>
             <q-item clickable v-close-popup to = "/w/萌">{{ s('國語萌典') }}</q-item>
@@ -234,5 +235,9 @@ export default {
 
   .ellipsis {
     text-overflow: inherit;
+  }
+
+  .q-btn__wrapper:before {
+    box-shadow: none;
   }
 </style>
