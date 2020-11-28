@@ -21,7 +21,7 @@
           <button @click="$router.push('/w/' + pre + myKey)">{{ s('查詢') }}</button>
         </q-toolbar-title>
         <a href="https://www.github.com/bestian/q-moedict/" target="_blank">
-          <img class = "icon" src="../assets/github-icon.svg" title="Fork Me On Github" width="16" height="16" />
+          <q-icon name = "ion-logo-github" />
         </a>
       </q-toolbar>
     </q-header>
@@ -224,8 +224,8 @@ export default {
     }
   }
 
-  .icon {
-    height: 1.2em;
+  a {
+    text-decoration: none;
   }
 
   .ellipsis {
