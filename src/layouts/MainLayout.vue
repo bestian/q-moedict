@@ -32,6 +32,7 @@
       bordered
       content-class="bg-grey-1"
       class = "no-print"
+      :width = "200"
     >
     <q-list bordered>
       <q-btn-dropdown rounded color="primary" label="分類詞典">
