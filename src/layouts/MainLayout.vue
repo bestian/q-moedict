@@ -48,7 +48,8 @@
         </q-menu>
       </q-btn>
       <br/>
-      <q-btn-dropdown rounded color="secondary" label="分類搜尋">
+    <q-btn label="分類搜尋">
+      <q-menu>
         <q-list>
           <q-item clickable v-close-popup @click="$router.push('/list/成語')">
             <q-item-section>
@@ -91,7 +92,8 @@
             </q-item-section>
           </q-item>
         </q-list>
-      </q-btn-dropdown>
+      </q-menu>
+    </q-btn>
       <q-item>
         <b>{{ s('已加星號') }}</b>
       </q-item>
