@@ -1,6 +1,6 @@
 <template>
   <q-page class="word" padding flex flex-center>
-    
+
   </q-page>
 </template>
 
