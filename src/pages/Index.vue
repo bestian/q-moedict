@@ -90,13 +90,13 @@
     <br/>
     <div class = "soc">
       <q-btn size="xs" color = "primary" class="facebook">
-        <a :href="'https://www.facebook.com/sharer/sharer.php?u=https://bestian.github.io/q-moedict/w/'+ w">
+        <a :href="'https://www.facebook.com/sharer/sharer.php?u=https://bestian.github.io/q-moedict/w/'+ w" target="_blank">
           <q-icon name = "fas fa-share-square" />
           <q-icon name = "fab fa-facebook-f" />
         </a>
       </q-btn>
       <q-btn size="xs" color = "secondary" class="twitter">
-        <a :href="'https://twitter.com/share?text=' + w + '&url=https://bestian.github.io/q-moedict/w/'+ w">
+        <a :href="'https://twitter.com/share?text=' + w + '&url=https://bestian.github.io/q-moedict/w/'+ w" target="_blank">
           <q-icon name = "fas fa-share-square" />
           <q-icon name = "fab fa-twitter" />
         </a>
