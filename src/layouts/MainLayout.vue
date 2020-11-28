@@ -35,6 +35,7 @@
       :width = "200"
     >
     <q-list bordered>
+      <q-item clickable v-close-popup to = "/about">{{ s('關於本站') }}</q-item>
       <q-item clickable v-close-popup onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
       <q-btn label="分類辭典">
         <q-menu>
