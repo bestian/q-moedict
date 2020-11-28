@@ -34,6 +34,7 @@
       class = "no-print"
     >
     <q-list bordered>
+      <q-item clickable v-close-popup onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
       <q-btn-dropdown rounded color="primary" label="分類詞典">
         <q-list>
           <q-item clickable v-close-popup to = "/w/萌">{{ s('國語萌典') }}</q-item>
