@@ -36,14 +36,16 @@
     >
     <q-list bordered>
       <q-item clickable v-close-popup onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
-      <q-btn-dropdown rounded color="primary" label="分類詞典">
-        <q-list>
-          <q-item clickable v-close-popup to = "/w/萌">{{ s('國語萌典') }}</q-item>
-          <q-item clickable v-close-popup to = "/w/~萌">{{ s('兩岸萌典') }}</q-item>
-          <q-item clickable v-close-popup to = "/w/'發穎">{{ s('臺灣閩南語') }}</q-item>
-          <q-item clickable v-close-popup to = "/w/:發芽">{{ s('臺灣客家語') }}</q-item>
-        </q-list>
-      </q-btn-dropdown>
+      <q-btn label="分類辭典">
+        <q-menu>
+          <q-list>
+            <q-item clickable v-close-popup to = "/w/萌">{{ s('國語萌典') }}</q-item>
+            <q-item clickable v-close-popup to = "/w/~萌">{{ s('兩岸萌典') }}</q-item>
+            <q-item clickable v-close-popup to = "/w/'發穎">{{ s('臺灣閩南語') }}</q-item>
+            <q-item clickable v-close-popup to = "/w/:發芽">{{ s('臺灣客家語') }}</q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
       <br/>
       <q-btn-dropdown rounded color="secondary" label="分類搜尋">
         <q-list>
