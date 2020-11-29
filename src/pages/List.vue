@@ -40,7 +40,7 @@ export default {
     set () {
       this.w = this.$route.params.id || '成語'
       console.log(this.w)
-      this.$axios.get('https://www.moedict.tw/=' + this.w + '.json')
+      this.$axios.get('=' + this.w + '.json')
         .then((response) => {
           this.err = false
           this.list = response.data

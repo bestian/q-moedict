@@ -73,11 +73,6 @@
               <q-item-label>{{ s('外來語-音譯')}}</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item clickable v-close-popup @click="$router.push('/list/音譯')">
-            <q-item-section>
-              <q-item-label>{{ s('外來語-音譯')}}</q-item-label>
-            </q-item-section>
-          </q-item>
           <q-item clickable v-close-popup @click="$router.push('/list/義譯')">
             <q-item-section>
               <q-item-label>{{ s('外來語-義譯')}}</q-item-label>
