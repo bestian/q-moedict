@@ -132,11 +132,45 @@ export default {
     }
   },
   mounted () {
-    console.log(this.w)
     this.set()
     this.s1()
   },
   methods: {
+    bucketOf: function (it) {
+      console.log(it)
+      var code
+      if (/^[=@]/.exec(it)) {
+        return it[0]
+      }
+      code = it.charCodeAt(0)
+      if (code >= 0xD800 && code <= 0xDBFF) {
+        code = it.charCodeAt(1) - 0xDC00
+      }
+      return code % (this.url === 'a' ? 1024 : 128)
+    },
+    fillBucket: function (id, bucket, cb) {
+      this.$axios.get('p' + this.url + 'ck/' + bucket + '.txt').then((response) => {
+        // console.log(response.data)
+        /* var raw = JSON.stringify(response.data)
+        var key, idx, part
+        key = escape(id)
+        idx = raw.indexOf('"' + key + '"')
+        if (idx === -1) {
+          return
+        }
+        part = raw.slice(idx + key.length + 3)
+        idx = part.indexOf('\n')
+        part = part.slice(0, idx) */
+        var key = escape(id)
+        var part = response.data[key]
+        console.log(part)
+        this.data = part
+        // console.log(this.data)
+        this.bs = this.data.h.map((o) => { return o.b || '' })
+        this.playing = false
+        // addToLru(id)
+      })
+    },
     closeD () {
       this.$emit('closeD')
     },
@@ -181,18 +215,22 @@ export default {
       this.$q.localStorage.set('pre', this.pre)
       this.$q.localStorage.set('url ', this.url)
       this.$emit('pre1', this.pre, this.url)
+      /*
       this.$axios.get('https://www.moedict.tw/' + this.url + '/' + this.w + '.json')
         .then((response) => {
           this.err = false
           this.data = response.data
-          console.log(this.data)
+          // console.log(this.data)
           this.bs = this.data.h.map((o) => { return o.b || '' })
           this.playing = false
         }).catch(err => {
           this.err = true
           console.log(err)
         })
-      this.$forceUpdate()
+      this.$forceUpdate() */
+      // console.log(this.w)
+      // console.log(this.bucketOf(this.w))
+      this.fillBucket(this.w, this.bucketOf(this.w))
     },
     play () {
       if (!this.playing) {

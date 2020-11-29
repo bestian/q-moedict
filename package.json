@@ -15,7 +15,9 @@
     "axios": "^0.18.1",
     "chinese-conv": "^1.0.1",
     "core-js": "^3.6.5",
-    "quasar": "^1.0.0"
+    "localforage": "^1.9.0",
+    "quasar": "^1.0.0",
+    "vlf": "^1.1.0"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0",
