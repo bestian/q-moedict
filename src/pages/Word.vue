@@ -166,9 +166,14 @@ export default {
         console.log(part)
         this.data = part
         // console.log(this.data)
-        this.bs = this.data.h.map((o) => { return o.b || '' })
+        if (this.data) {
+          this.bs = this.data.h.map((o) => { return o.b || '' })
+        }
         this.playing = false
         // addToLru(id)
+      }).catch(err => {
+        this.err = true
+        console.log(err)
       })
     },
     closeD () {
