@@ -124,7 +124,7 @@ module.exports = function (/* ctx */) {
             // Match any request ends with .png, .jpg, .jpeg or .svg.
             urlPattern: /.(?:png|jpg|jpeg|svg|txt)$/,
             // Apply a cache-first strategy.
-            handler: "cacheFirst",
+            handler: "CacheFirst",
             options: {
               // Use a custom cache name.
               cacheName: "images"
