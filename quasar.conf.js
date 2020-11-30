@@ -117,7 +117,21 @@ module.exports = function (/* ctx */) {
     // https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
-      workboxOptions: {}, // only for GenerateSW
+      workboxOptions: {
+        exclude: [/.(?:png|jpg|jpeg|svg|txt)$/],
+        runtimeCaching: [
+          {
+            // Match any request ends with .png, .jpg, .jpeg or .svg.
+            urlPattern: /.(?:png|jpg|jpeg|svg|txt)$/,
+            // Apply a cache-first strategy.
+            handler: "cacheFirst",
+            options: {
+              // Use a custom cache name.
+              cacheName: "images"
+            }
+          }
+        ]
+      }, // only for GenerateSW
       manifest: {
         name: '萌典',
         short_name: '萌典',
