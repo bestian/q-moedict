@@ -133,7 +133,7 @@ export default {
       u = this.$q.localStorage.getItem('url') || u || ''
       this.pre = p
       this.url = u
-      this.$axios.get('https://www.moedict.tw/' + this.url + '/index.json')
+      this.$axios.get('' + this.url + '/index.json')
         .then((response) => {
           this.data = response.data
         })
