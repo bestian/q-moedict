@@ -37,6 +37,7 @@
     <q-list bordered>
       <q-item clickable v-close-popup to = "/about">{{ s('關於本站') }}</q-item>
       <q-item clickable v-close-popup @click="leftDrawerOpen = false" onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
+      <!-- <q-item>隨機條目</q-item> -->
       <q-btn size = "lg" label="分類辭典">
         <q-icon name = "arrow_drop_down" />
         <q-menu>
