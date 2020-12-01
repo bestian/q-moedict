@@ -127,8 +127,17 @@ export default {
   },
   methods: {
     randomRoute () {
-      const r = this.data[Math.floor(Math.random() * this.data.length)]
-      this.$router.push('/w/' + r)
+      var p = this.$q.localStorage.getItem('pre') || ''
+      var u = this.$q.localStorage.getItem('url') || 'a'
+      this.pre = p
+      this.url = u
+      console.log(this.url)
+      this.$axios.get('' + this.url + '/index.json')
+        .then((response) => {
+          this.data = response.data
+          const r = this.data[Math.floor(Math.random() * this.data.length)]
+          this.$router.push('/w/' + this.pre + r)
+        })
     },
     closeD () {
       this.leftDrawerOpen = false
