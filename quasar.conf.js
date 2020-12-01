@@ -118,11 +118,12 @@ module.exports = function (/* ctx */) {
     pwa: {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {
-        exclude: [/.(?:png|jpg|jpeg|svg|txt)$/],
+        maximumFileSizeToCacheInBytes: 50000000,
+        exclude: [/.(?:png|jpg|jpeg|svg)$/],
         runtimeCaching: [
           {
             // Match any request ends with .png, .jpg, .jpeg or .svg.
-            urlPattern: /.(?:png|jpg|jpeg|svg|txt)$/,
+            urlPattern: /.(?:png|jpg|jpeg|svg)$/,
             // Apply a cache-first strategy.
             handler: "CacheFirst",
             options: {
