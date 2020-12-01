@@ -118,6 +118,8 @@ module.exports = function (/* ctx */) {
     pwa: {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {
+        skipWaiting: true,
+        clientsClaim: true,
         maximumFileSizeToCacheInBytes: 5000000,
         exclude: [/.(?:png|jpg|jpeg|svg|txt)$/],
         runtimeCaching: [
