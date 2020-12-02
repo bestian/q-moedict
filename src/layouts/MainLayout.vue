@@ -20,7 +20,20 @@
           </datalist>
           <button @click="$router.push('/w/' + pre + myKey)">{{ s('查詢') }}</button>
         </q-toolbar-title>
-        <a href="https://www.github.com/bestian/q-moedict/" target="_blank">
+
+        <a class="btn si no-print" v-if = "!si" @click="s1(true)" :title="s('轉成簡體')">
+          簡
+        </a>
+        <a class="btn ti no-print" v-else @click="s1(false)" :title="s('轉成正體')">
+          正
+        </a>
+
+        <a class="fat-only btn no-print" @click="leftDrawerOpen = false" onclick = "window.print()"><q-icon name="print" :title="s('列印本頁')"/>
+        </a>
+
+        <a class="btn no-print" @click = "randomRoute()" :title="s('隨機條目')"><q-icon name="ion-shuffle" /></a>
+
+        <a class="fat-only btn no-print" href="https://www.github.com/bestian/q-moedict/" target="_blank" :title="s('源碼')">
           <q-icon name = "ion-logo-github" />
         </a>
       </q-toolbar>
@@ -103,7 +116,7 @@
 
     <q-page-container>
       <div class="gcse-search"></div>
-      <router-view @updateStars = "updateStars" @updateSi = "s1" @pre1="pre1" :stars="stars" @closeD = "closeD"/>
+      <router-view @updateStars = "updateStars" @updateSi = "s1" @pre1="pre1" :stars="stars" @closeD = "closeD" :si="si"/>
     </q-page-container>
   </q-layout>
 </template>
@@ -159,8 +172,11 @@ export default {
         return t
       }
     },
-    s1 () {
+    s1 (k) {
       var si = this.$q.localStorage.getItem('si')
+      if (typeof k !== 'undefined') {
+        si = k
+      }
       console.log(si)
       if (!si) { si = false }
       this.si = si
@@ -245,8 +261,10 @@ export default {
     }
   }
 
-  a {
+  a.btn {
     text-decoration: none;
+    margin: 0 .2em;
+    cursor: pointer;
   }
 
   .ellipsis {

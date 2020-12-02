@@ -27,7 +27,6 @@ a {
 }
 
 @media print {
-
 	.no-print, .gsc-control-cse {
 		display: none !important;
 		visibility: hidden !important;
@@ -38,4 +37,10 @@ a {
 	.q-page {
         width: 100% !important;
     }
+}
+
+@media screen and (max-width: 600px) {
+	.fat-only {
+		display: none;
+	}
 }

@@ -36,12 +36,13 @@
         <a class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
           <q-icon name="print" />
         </a>
+        <!--
         <a class="si no-print" v-if = "!si" @click="s1(true)">
           簡
         </a>
         <a class="ti no-print" v-else @click="s1(false)">
           正
-        </a>
+        </a> -->
         <div v-if = "data">
           <ol>
             <li v-for = "d in data.h[idx].d" :key = "d.f">
@@ -119,11 +120,10 @@ export default {
       pre: '',
       title: '萌典',
       url: 'a',
-      err: false,
-      si: false
+      err: false
     }
   },
-  props: ['stars'],
+  props: ['stars', 'si'],
   meta () {
     return {
       // this accesses the "title" property in your Vue "data";
@@ -203,7 +203,7 @@ export default {
       var si = this.$q.localStorage.getItem('si')
       si = s
       if (!si) { si = false }
-      this.si = si
+      // this.si = si
       this.$q.localStorage.set('si', si)
       this.$emit('updateSi')
     },
