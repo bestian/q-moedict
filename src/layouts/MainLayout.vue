@@ -214,7 +214,10 @@ export default {
     }
   },
   mounted () {
-    this.s1()
+    if (navigator.language === 'zh-cn' || navigator.language === 'zh-CN' || navigator.userLanguage === 'zh-cn') {
+      this.si = true
+    }
+    this.s1(this.si)
     var vm = this
     this.deep()
     this.$axios.get('https://www.moedict.tw/' + this.url + '/index.json')
