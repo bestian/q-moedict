@@ -28,7 +28,7 @@
           正
         </a>
 
-        <a class="fat-only btn no-print" @click="leftDrawerOpen = false" onclick = "window.print()"><q-icon name="print" :title="s('列印本頁')"/>
+        <a class="fat-only btn no-print" @click="leftDrawerOpen = false" onclick = "setTimeout(() => {window.print()}, 500)"><q-icon name="print" :title="s('列印本頁')"/>
         </a>
 
         <a class="btn no-print" @click = "randomRoute()" :title="s('隨機條目')"><q-icon name="ion-shuffle" /></a>
@@ -49,7 +49,7 @@
     >
     <q-list bordered>
       <q-item clickable v-close-popup to = "/about">{{ s('關於本站') }}</q-item>
-      <q-item clickable v-close-popup @click="leftDrawerOpen = false" onclick = "window.print()">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
+      <q-item clickable v-close-popup @click="leftDrawerOpen = false" onclick = "setTimeout(() => {window.print()}, 500)">{{ s('列印本頁') }}<q-icon name="print" /></q-item>
       <q-item clickable @click = "randomRoute()">{{ s('隨機條目') }}<q-icon name="ion-shuffle" /></q-item>
       <q-btn size = "lg" label="分類辭典">
         <q-icon name = "arrow_drop_down" />
