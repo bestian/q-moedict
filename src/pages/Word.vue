@@ -266,7 +266,11 @@ export default {
       var word = w
       var arr
       if (b) {
+        var ws = ('' + w).split('')
         arr = ('' + b).split('　')
+        if (ws.indexOf('，') > -1) {
+          arr.splice(ws.indexOf('，'), 0, '')
+        }
         return arr.map((k, idx) => {
           k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
           var obj = {
