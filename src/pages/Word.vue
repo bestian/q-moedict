@@ -9,7 +9,7 @@
               <span class = "yin"> {{y.yin}} </span>
               <span class = "diao"> {{y.diao}} </span>
             </span>
-            <span class = "p" v-show="i == 0" :class="{ hakka: pre == ':'}"> {{y.pin}} </span>
+            <span class = "p" v-show="i == 0" :class="{ hakka: pre == ':'}" v-html = "y.pin"></span>
             <span class = "p" v-show="i == 0" :class="{ hakka: pre == ':'}"> {{y.T}}</span>
           </span>
         </span>
@@ -268,16 +268,19 @@ export default {
       if (b) {
         var ws = ('' + w).split('')
         arr = ('' + b).split('　')
+        var ps = p.split(' ')
         if (ws.indexOf('，') > -1) {
           arr.splice(ws.indexOf('，'), 0, '')
+          ps.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;')
         }
+        p = ps.join(' ')
         return arr.map((k, idx) => {
           k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
           var obj = {
             w: word[idx],
             yin: k.substr(0, k.length - 1),
             diao: k.substr(k.length - 1, k.length),
-            pin: p.replace(/\s/g, '　'),
+            pin: p.replace(/\s/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'),
             T: T
           }
           if (obj.diao !== 'ˋ' && obj.diao !== 'ˊ' && obj.diao !== 'ˇ' && obj.diao !== 'ˊ') {
