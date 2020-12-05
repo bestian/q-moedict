@@ -2,6 +2,7 @@
   <q-page class="word" padding>
     <div>
       <input type="search" name="myKey" v-model="myKey" placeholder="關鍵字篩選" />
+      <q-btn color = "primary" @click = "randomRoute()"> 隨機搜尋 </q-btn>
     </div>
     <ul>
       <li v-for = "(item, idx) in has(list, myKey)" :key = "idx">
@@ -37,6 +38,10 @@ export default {
     this.set()
   },
   methods: {
+    randomRoute () {
+      const r = this.list[Math.floor(Math.random() * this.list.length)]
+      this.$router.push('/w/' + r)
+    },
     set () {
       this.w = this.$route.params.id || '成語'
       console.log(this.w)
