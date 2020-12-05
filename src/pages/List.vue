@@ -1,14 +1,17 @@
 <template>
   <q-page class="word" padding>
-    <div>
+    <div class="no-print">
       <input type="search" name="myKey" v-model="myKey" placeholder="關鍵字篩選" />
       <q-btn color = "primary" @click = "randomRoute()"> 隨機搜尋 </q-btn>
     </div>
-    <ul>
+    <ul class="no-print">
       <li v-for = "(item, idx) in has(list, myKey)" :key = "idx">
         <router-link :to = "'/w/'+ item">{{ item }}</router-link>
       </li>
     </ul>
+     <div class="print-only">
+      <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://bestian.github.io/q-moedict/%23/list/' + w + '&choe=UTF-8'" />
+    </div>
   </q-page>
 </template>
 
