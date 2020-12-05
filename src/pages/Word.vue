@@ -86,18 +86,18 @@
       對不起，找不到你要查詢的條目
     </div>
     <div class="print-only">
-      <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://bestian.github.io/q-moedict/#/w/' + pre + w + '&choe=UTF-8'" />
+      <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://www.moedict.tw/' + pre + w + '&choe=UTF-8'" />
     </div>
     <br/>
     <div class = "soc no-print">
       <q-btn size="xs" color = "primary" class="facebook">
-        <a :href="'https://www.facebook.com/sharer/sharer.php?u=https://bestian.github.io/q-moedict/#/w/'+ w" target="_blank">
+        <a :href="'https://www.facebook.com/sharer/sharer.php?u=https://bestian.github.io/q-moedict/#/w/'+ pre + w" target="_blank">
           <q-icon name = "fas fa-share-square" />
           <q-icon name = "fab fa-facebook-f" />
         </a>
       </q-btn>
       <q-btn size="xs" color = "secondary" class="twitter">
-        <a :href="'https://twitter.com/share?text=' + w + '&url=https://bestian.github.io/q-moedict/%23/w/'+ w" target="_blank">
+        <a :href="'https://twitter.com/share?text=' + w + '&url=https://bestian.github.io/q-moedict/%23/w/' + pre + w" target="_blank">
           <q-icon name = "fas fa-share-square" />
           <q-icon name = "fab fa-twitter" />
         </a>
