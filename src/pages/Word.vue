@@ -86,7 +86,7 @@
       對不起，找不到你要查詢的條目
     </div>
     <div class="print-only">
-      <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://www.moedict.tw/' + pre + w + '&choe=UTF-8'" />
+      <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://bestian.github.io/q-moedict/#/w/' + pre + w + '&choe=UTF-8'" />
     </div>
     <br/>
     <div class = "soc no-print">

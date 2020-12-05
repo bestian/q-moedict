@@ -8,6 +8,9 @@
         <router-link :to = "'/w/'+ item">{{ item }}</router-link>
       </li>
     </ul>
+     <div class="print-only">
+      <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://bestian.github.io/q-moedict/#/list/' + w + '&choe=UTF-8'" />
+    </div>
   </q-page>
 </template>
 
