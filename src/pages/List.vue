@@ -2,7 +2,8 @@
   <q-page class="word" padding>
     <div class="no-print">
       <input type="search" name="myKey" v-model="myKey" placeholder="關鍵字篩選" />
-      <q-btn color = "primary" @click = "randomRoute()"> 隨機搜尋 </q-btn>
+      <q-btn color = "primary" @click = "randomRoute()">隨機搜尋<q-icon name="ion-shuffle" />
+      </q-btn>
     </div>
     <ul class="no-print">
       <li v-for = "(item, idx) in has(list, myKey)" :key = "idx">
