@@ -9,8 +9,8 @@
               <span class = "yin"> {{y.yin}} </span>
               <span class = "diao"> {{y.diao}} </span>
             </span>
-            <span class = "p" v-show="i == 0" :class="{ hakka: pre == ':'}" v-html = "y.pin"></span>
-            <span class = "p" v-show="i == 0" :class="{ hakka: pre == ':'}"> {{y.T}}</span>
+            <span class = "p" v-show = "idx == 0 || pre !== ':'" :class="{ hakka: pre == ':'}" v-html = "y.pin"></span>
+            <span class = "p" :class="{ hakka: pre == ':'}" v-show = "idx == 0 || pre !== ':'" > {{y.T}}</span>
           </span>
         </span>
 
@@ -265,23 +265,30 @@ export default {
     yindiao (w, b, p, T) {
       var word = w
       var arr
+      var ts = []
+      var ps = []
+      var ws
       if (b) {
-        var ws = ('' + w).split('')
+        ws = ('' + w).split('')
         arr = ('' + b).split('　')
-        var ps = p.split(' ')
+        ps = p.split(' ')
+        if (T) {
+          ts = T.split(' ')
+        }
         if (ws.indexOf('，') > -1) {
           arr.splice(ws.indexOf('，'), 0, '')
           ps.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;')
+          if (T) { ts.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;') }
         }
-        p = ps.join(' ')
+        console.log(ps)
         return arr.map((k, idx) => {
           k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
           var obj = {
             w: word[idx],
             yin: k.substr(0, k.length - 1),
             diao: k.substr(k.length - 1, k.length),
-            pin: p.replace(/\s/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'),
-            T: T
+            pin: ps[idx],
+            T: ts[idx]
           }
           if (obj.diao !== 'ˋ' && obj.diao !== 'ˊ' && obj.diao !== 'ˇ' && obj.diao !== 'ˊ') {
             obj.yin = obj.yin + obj.diao
@@ -290,18 +297,31 @@ export default {
           return obj
         })
       } else {
+        ws = ('' + w).split('')
+        arr = ('' + b).split('　')
+        if (T) {
+          ts = T.split(' ')
+        }
+        if (p) {
+          ps = p.replace('四⃞', '四')
+            .replace('海⃞', '海')
+            .replace('海⃞', '海')
+            .replace('大⃞', '大')
+            .replace('平⃞', '平')
+            .replace('安⃞', '安')
+            .replace('南⃞', '南').split(' ')
+        }
+        if (ws.indexOf('，') > -1) {
+          arr.splice(ws.indexOf('，'), 0, '')
+          ps.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;')
+          if (T) { ts.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;') }
+        }
         return w.split('').map((k, idx) => {
           k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
           var obj = {
             w: word[idx],
-            pin: p && p.replace('四⃞', '四')
-              .replace('海⃞', '海')
-              .replace('海⃞', '海')
-              .replace('大⃞', '大')
-              .replace('平⃞', '平')
-              .replace('安⃞', '安')
-              .replace('南⃞', '南'),
-            T: T
+            pin: (idx === 0 ? ps.join('') : ''),
+            T: ts[idx]
           }
           return obj
         })
