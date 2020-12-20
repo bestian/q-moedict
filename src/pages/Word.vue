@@ -120,7 +120,8 @@ export default {
       pre: '',
       title: '萌典',
       url: 'a',
-      err: false
+      err: false,
+      num: 0
     }
   },
   props: ['stars', 'si'],
@@ -134,6 +135,7 @@ export default {
   mounted () {
     this.set()
     this.s1()
+    this.storeAll()
   },
   methods: {
     bucketOf: function (it) {
@@ -148,32 +150,67 @@ export default {
       }
       return code % (this.url === 'a' ? 1024 : 128)
     },
+    storeAll: function () {
+      var vm = this
+      this.$getItem('p' + this.url + 'ck/' + vm.num).then((d) => {
+        console.log(d)
+        if (!d) {
+          vm.$axios.get('p' + vm.url + 'ck/' + vm.num + '.txt').then((response) => {
+            vm.$setItem('p' + vm.url + 'ck/' + vm.num, response.data, function (d) {
+              console.log(response.data)
+              vm.num += 1
+              vm.storeAll()
+            })
+          })
+        } else {
+          vm.num += 1
+          vm.storeAll()
+        }
+      })
+    },
     fillBucket: function (id, bucket, cb) {
-      this.$axios.get('p' + this.url + 'ck/' + bucket + '.txt').then((response) => {
-        // console.log(response.data)
-        /* var raw = JSON.stringify(response.data)
-        var key, idx, part
-        key = escape(id)
-        idx = raw.indexOf('"' + key + '"')
-        if (idx === -1) {
-          return
+      var vm = this
+      this.$getItem('p' + this.url + 'ck/' + bucket).then((d) => {
+        console.log(d)
+        if (d) {
+          var key = escape(id)
+          var part = d[key]
+          console.log(part)
+          this.data = part
+          // console.log(this.data)
+          if (this.data) {
+            this.bs = this.data.h.map((o) => { return o.b || '' })
+          }
+          this.playing = false
+          // addToLru(id)
+        } else {
+          vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
+            // console.log(response.data)
+            /* var raw = JSON.stringify(response.data)
+            var key, idx, part
+            key = escape(id)
+            idx = raw.indexOf('"' + key + '"')
+            if (idx === -1) {
+              return
+            }
+            part = raw.slice(idx + key.length + 3)
+            idx = part.indexOf('\n')
+            part = part.slice(0, idx) */
+            var key = escape(id)
+            var part = response.data[key]
+            console.log(part)
+            vm.data = part
+            // console.log(this.data)
+            if (vm.data) {
+              vm.bs = vm.data.h.map((o) => { return o.b || '' })
+            }
+            vm.playing = false
+            // addToLru(id)
+          }).catch(err => {
+            vm.err = true
+            console.log(err)
+          })
         }
-        part = raw.slice(idx + key.length + 3)
-        idx = part.indexOf('\n')
-        part = part.slice(0, idx) */
-        var key = escape(id)
-        var part = response.data[key]
-        console.log(part)
-        this.data = part
-        // console.log(this.data)
-        if (this.data) {
-          this.bs = this.data.h.map((o) => { return o.b || '' })
-        }
-        this.playing = false
-        // addToLru(id)
-      }).catch(err => {
-        this.err = true
-        console.log(err)
       })
     },
     closeD () {

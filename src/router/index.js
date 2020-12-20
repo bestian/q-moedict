@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import VueLocalForage from 'vue-localforage'
 import routes from './routes'
 
+Vue.use(VueLocalForage)
 Vue.use(VueRouter)
 
 /*
