@@ -19,7 +19,7 @@
           <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
         </audio>
 
-        <a class = "no-print" id = "play" @click = "play()" v-if = "data.h[idx]['=']">
+        <a name ="play" class = "no-print" id = "play" @click = "play()" v-if = "data.h[idx]['=']">
           <q-icon name="play_arrow" v-if="!playing"/>
           <q-icon name="pause" v-else/>
         </a>
@@ -27,13 +27,13 @@
         <span v-if = "data.r">
           <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
         </span>
-        <a class ="star" v-if = "stars.indexOf(pre + w) == -1" @click = "star(pre + w)">
+        <a name = "star" class ="star" v-if = "stars.indexOf(pre + w) == -1" @click = "star(pre + w)">
           <q-icon name="star_outline" />
         </a>
-        <a class ="star"  v-else @click="unstar(pre + w)">
+        <a name = "unstar"  class ="star"  v-else @click="unstar(pre + w)">
           <q-icon name="star" />
         </a>
-        <a class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
+        <a name = "print" class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
           <q-icon name="print" />
         </a>
         <!--
@@ -90,14 +90,14 @@
     </div>
     <br/>
     <div class = "soc no-print">
-      <q-btn size="xs" color = "primary" class="facebook">
-        <a :href="'https://www.facebook.com/sharer/sharer.php?u=https://bestian.github.io/q-moedict/#/w/' + pre + w" target="_blank">
+      <q-btn size="xs" color = "primary" class="facebook"  aria-label="facebook">
+        <a name = "facebook" :href="'https://www.facebook.com/sharer/sharer.php?u=https://bestian.github.io/q-moedict/#/w/' + pre + w" target="_blank" rel="noreferrer noopener">
           <q-icon name = "fas fa-share-square" />
           <q-icon name = "fab fa-facebook-f" />
         </a>
       </q-btn>
-      <q-btn size="xs" color = "secondary" class="twitter">
-        <a :href="'https://twitter.com/share?text=' + w + '&url=https://bestian.github.io/q-moedict/#/w/' + pre + w" target="_blank">
+      <q-btn size="xs" color = "secondary" class="twitter"  aria-label="twitter">
+        <a name = "twitter" :href="'https://twitter.com/share?text=' + w + '&url=https://bestian.github.io/q-moedict/#/w/' + pre + w" target="_blank" rel="noreferrer noopener">
           <q-icon name = "fas fa-share-square" />
           <q-icon name = "fab fa-twitter" />
         </a>

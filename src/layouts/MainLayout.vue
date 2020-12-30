@@ -8,32 +8,33 @@
           round
           icon="menu"
           aria-label="Menu"
+          name="menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
         <q-toolbar-title>
           <input id="s" type="search" name="s" v-model="myKey" list="words" :placeholder="s('輸入字詞')" @keydown.enter="$router.push('/w/' + pre + myKey)"/>
-          <label for="s"></label>
+          <label for="s">-</label>
           <datalist id ="words">
             <option v-for = "d in has(data, myKey).slice(0,n)" :key="d" :value="d"></option>
             }
           </datalist>
-          <button @click="$router.push('/w/' + pre + myKey)">{{ s('查詢') }}</button>
+          <button :aria-label="s('查詢')" @click="$router.push('/w/' + pre + myKey)">{{ s('查詢') }}</button>
         </q-toolbar-title>
 
-        <a class="btn si no-print" v-if = "!si" @click="s1(true)" :title="s('轉成簡體')">
+        <a name="sify" class="btn si no-print" v-if = "!si" @click="s1(true)" :title="s('轉成簡體')">
           簡
         </a>
-        <a class="btn ti no-print" v-else @click="s1(false)" :title="s('轉成正體')">
+        <a name="tify" class="btn ti no-print" v-else @click="s1(false)" :title="s('轉成正體')">
           正
         </a>
 
-        <a class="fat-only btn no-print" @click="leftDrawerOpen = false" onclick = "setTimeout(() => {window.print()}, 500)"><q-icon name="print" :title="s('列印本頁')"/>
+        <a name="print" class="fat-only btn no-print" @click="leftDrawerOpen = false" onclick = "setTimeout(() => {window.print()}, 500)"><q-icon name="print" :title="s('列印本頁')"/>
         </a>
 
-        <a class="btn no-print" @click = "randomRoute()" :title="s('隨機條目')"><q-icon name="ion-shuffle" /></a>
+        <a name="radom" class="btn no-print" @click = "randomRoute()" :title="s('隨機條目')"><q-icon name="ion-shuffle" /></a>
 
-        <a class="fat-only btn no-print" href="https://www.github.com/bestian/q-moedict/" target="_blank" :title="s('源碼')">
+        <a name="github" class="fat-only btn no-print" href="https://www.github.com/bestian/q-moedict/" target="_blank" :title="s('源碼')" rel="noreferrer noopener">
           <q-icon name = "ion-logo-github" />
         </a>
       </q-toolbar>
@@ -189,7 +190,7 @@ export default {
       var gcse = document.createElement('script')
       gcse.type = 'text/javascript'
       gcse.async = true
-      gcse.src = '//www.google.com/cse/cse.js?cx=' + cx
+      gcse.src = 'https://www.google.com/cse/cse.js?cx=' + cx
       var s = document.getElementsByTagName('script')[0]
       s.parentNode.insertBefore(gcse, s)
       setInterval(function () {
