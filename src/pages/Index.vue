@@ -94,12 +94,14 @@
         <a name = "facebook" :href="'https://www.facebook.com/sharer/sharer.php?u=https://bestian.github.io/q-moedict/#/w/' + pre + w" target="_blank" rel="noreferrer noopener">
           <q-icon name = "fas fa-share-square" />
           <q-icon name = "fab fa-facebook-f" />
+          Facebook
         </a>
       </q-btn>
       <q-btn size="xs" color = "secondary" class="twitter"  aria-label="twitter">
         <a name = "twitter" :href="'https://twitter.com/share?text=' + w + '&url=https://bestian.github.io/q-moedict/#/w/' + pre + w" target="_blank" rel="noreferrer noopener">
           <q-icon name = "fas fa-share-square" />
           <q-icon name = "fab fa-twitter" />
+          Twitter
         </a>
       </q-btn>
     </div>
@@ -394,7 +396,7 @@ export default {
         .replace(/{\[8e7a\]}/g, '☷')
         .replace(/{\[9264\]}/g, '灾')
         .replace(/{\[9064\]}/g, '从')
-        .replace(/\s/g, '　')
+        .replace(/\s/g, '')
       var arr = [...a.matchAll(/(\s|⚋|⚊|☰|☱|☲|☳|☴|☵|☶|☷|灾|从|0|1|2|3|4|5|6|7|8|9|：|《|》|〈|〉|!|-|"￹|É|é|Ɨ|ɨ|Ṟ|ṟ|Ʉ|ʉ|’O͘|Ò͘|Ô͘|Ǒ͘|Ō͘|O̍͘|Ő͘|Ŏ͘|Á|Í|Ú|É|À|Ì|Ù|È|Â|Î|Û|Ê|Ǎ|Ǐ|Ǔ|Ě|Ā|Ī|Ū|Ē|A̍|I̍|U̍|E̍|A̋|I̋|Ű|Ă|Ĭ|Ŭ|Ĕ|Ḿ|Ń|M̀|Ǹ|M̂|N̂|M̌|Ň|M̄|N̄|M̍|N̍|M̋|N̋|M̆|N̆|á|í|ú|é|ó|ó͘|ḿ|ń|à|ì|ù|è|ò|ò͘|m̀|ǹ|â|î|û|ê|ô|ô͘|m̂|n̂|ǎ|ǐ|ǔ|ě|ǒ|ǒ͘|m̌|ň|ā|ī|ū|ē|ō|ō͘|m̄|n̄|a̍|i̍|u̍|e̍|o̍|o̍͘|m̍|n̍|a̋|i̋|ű|e̋|ő|ő͘|m̋|n̋|ă|ĭ|ŭ|ĕ|ŏ|ŏ͘|m̆|n̆|ⁿ|ˆ|ˇ|ˊ|ˋ|⁺|[a-z]|[A-Z]|．|、|。|；|「|」|『|』|（|）|\(|\)|，|,|`(.+?)~)/g)].map((o) => {
         const w = o.filter((k) => { return k })
         // console.log(w)
@@ -455,11 +457,6 @@ export default {
     border-radius: 2px;
     margin-right: .2em;
     padding: 0 .1em;
-  }
-
-  .star {
-    font-size: 24px;
-    color: gold;
   }
 
   .yindiao {
