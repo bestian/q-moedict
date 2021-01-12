@@ -121,7 +121,7 @@ module.exports = function (/* ctx */) {
         skipWaiting: true,
         clientsClaim: true,
         maximumFileSizeToCacheInBytes: 5000000,
-        exclude: [/.(?:png|jpg|jpeg|svg|txt)$/],
+        exclude: [/.(?:png|jpg|jpeg|svg|txt|json)$/],
         runtimeCaching: [
           {
             // Match any request ends with .png, .jpg, .jpeg or .svg.
