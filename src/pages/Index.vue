@@ -24,6 +24,8 @@
           <q-icon name="pause" v-else/>
         </a>
 
+        <!-- <word :data="moe" :progress=1.0" ></word> -->
+
         <span v-if = "data.r">
           <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
         </span>
@@ -110,11 +112,15 @@
 
 <script>
 import { sify } from 'chinese-conv'
+// import { data, Word } from 'react-zh-stroker'
+
+// const moe = data.computeLength(word);
 
 export default {
   name: 'PageIndex',
   data () {
     return {
+      // moe: moe,
       w: '',
       bs: [],
       data: null,
@@ -126,6 +132,7 @@ export default {
       num: 0
     }
   },
+  // components: { 'word': Word },
   props: ['stars', 'si'],
   meta () {
     return {
