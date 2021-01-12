@@ -125,7 +125,7 @@ module.exports = function (/* ctx */) {
         runtimeCaching: [
           {
             // Match any request ends with .png, .jpg, .jpeg or .svg.
-            urlPattern: /.(?:png|jpg|jpeg|svg|txt)$/,
+            urlPattern: /.(?:png|jpg|jpeg|svg|txt|json)$/,
             // Apply a cache-first strategy.
             handler: "CacheFirst",
             options: {
