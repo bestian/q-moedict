@@ -12,7 +12,7 @@
   "dependencies": {
     "@quasar/cli": "^1.1.2",
     "@quasar/extras": "^1.0.0",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "chinese-conv": "^1.0.1",
     "core-js": "^3.6.5",
     "localforage": "^1.9.0",

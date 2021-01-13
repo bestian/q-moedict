@@ -112,9 +112,9 @@
 
 <script>
 import { sify } from 'chinese-conv'
-// import { data, Word } from 'react-zh-stroker'
-
-// const moe = data.computeLength(word);
+// eslint-disable-next-line
+// import { default as RZS } from 'react-zh-stroker'
+// const { data, Word } = RZS
 
 export default {
   name: 'PageIndex',
@@ -142,6 +142,10 @@ export default {
     }
   },
   mounted () {
+    // this.$axios.get('/json/840c.json').then((response) => {
+    //  console.log(response.data)
+    //  this.moe = data.computeLength(response.data)
+    // })
     this.pre = this.$q.localStorage.getItem('pre') || this.pre
     this.url = this.$q.localStorage.getItem('url') || this.url
     if (this.pre === '~') {
