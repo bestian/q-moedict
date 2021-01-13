@@ -121,6 +121,7 @@ import { sify } from 'chinese-conv'
 
 export default {
   name: 'PageIndex',
+  // components: { Word },
   data () {
     return {
       // moe: moe,

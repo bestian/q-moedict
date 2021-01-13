@@ -23,6 +23,8 @@
           <q-icon name="play_arrow" v-if="!playing"/>
           <q-icon name="pause" v-else/>
         </a>
+        
+        <!-- <word :data="moe" :progress=1.0" ></word> -->
 
         <span v-if = "data.r">
           <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
@@ -110,11 +112,19 @@
 
 <script>
 import { sify } from 'chinese-conv'
+// eslint-disable-next-line
+// import { default as RZS } from 'react-zh-stroker'
+// const { data, Word } = RZS
+
+// console.log(data)
+// console.log(Word)
 
 export default {
   name: 'PageIndex',
+  // components: { Word },
   data () {
     return {
+      // moe: '',
       w: '',
       bs: [],
       data: null,
@@ -135,6 +145,13 @@ export default {
     }
   },
   mounted () {
+    // var vm = this
+    // var code = vm.w.charCodeAt(0).toString(16)
+    // this.$axios.get('/json/' + code +'.json').then((response) => {
+    //  console.log(response.data)
+    //  this.moe = data.computeLength(response.data)
+    // })
+    
     this.set()
     this.s1()
     this.storeAll()
