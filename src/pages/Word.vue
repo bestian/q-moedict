@@ -23,7 +23,7 @@
           <q-icon name="play_arrow" v-if="!playing"/>
           <q-icon name="pause" v-else/>
         </a>
-        
+
         <!-- <word :data="moe" :progress=1.0" ></word> -->
 
         <span v-if = "data.r">
@@ -151,7 +151,7 @@ export default {
     //  console.log(response.data)
     //  this.moe = data.computeLength(response.data)
     // })
-    
+
     this.set()
     this.s1()
     this.storeAll()
