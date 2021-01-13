@@ -116,6 +116,9 @@ import { sify } from 'chinese-conv'
 // import { default as RZS } from 'react-zh-stroker'
 // const { data, Word } = RZS
 
+// console.log(data)
+// console.log(Word)
+
 export default {
   name: 'PageIndex',
   data () {
