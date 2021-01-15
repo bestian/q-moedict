@@ -316,7 +316,7 @@ export default {
       this.moes = []
       for (var i = 0; i < list.length; i++) {
         var code = list[i].charCodeAt(0).toString(16)
-        this.$axios.get('/json/' + code + '.json').then((response) => {
+        this.$axios.get('./json/' + code + '.json').then((response) => {
           console.log(response.data)
           this.moes.push(data.computeLength(response.data))
         })

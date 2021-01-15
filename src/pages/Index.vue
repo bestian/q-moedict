@@ -152,7 +152,7 @@ export default {
   },
   mounted () {
     this.startDraw()
-    this.$axios.get('/json/840c.json').then((response) => {
+    this.$axios.get('./json/840c.json').then((response) => {
       console.log(response.data)
       this.moe = data.computeLength(response.data)
     })
