@@ -24,7 +24,7 @@
           <q-icon name="pause" v-else/>
         </a>
 
-        <!-- <word :data="moe" :progress=1.0" ></word> -->
+        <word :data="moe" :progress="1.0" ></word>
 
         <span v-if = "data.r">
           <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
@@ -113,18 +113,19 @@
 <script>
 import { sify } from 'chinese-conv'
 // eslint-disable-next-line
+import { data, Word } from 'react-zh-stroker'
 // import { default as RZS } from 'react-zh-stroker'
 // const { data, Word } = RZS
 
-// console.log(data)
-// console.log(Word)
+console.log(data)
+console.log(Word)
 
 export default {
   name: 'PageIndex',
-  // components: { Word },
+  components: { Word },
   data () {
     return {
-      // moe: moe,
+      moe: '',
       w: '',
       bs: [],
       data: null,
@@ -146,10 +147,10 @@ export default {
     }
   },
   mounted () {
-    // this.$axios.get('/json/840c.json').then((response) => {
-    //  console.log(response.data)
-    //  this.moe = data.computeLength(response.data)
-    // })
+    this.$axios.get('/json/840c.json').then((response) => {
+      console.log(response.data)
+      this.moe = data.computeLength(response.data)
+    })
     this.pre = this.$q.localStorage.getItem('pre') || this.pre
     this.url = this.$q.localStorage.getItem('url') || this.url
     if (this.pre === '~') {
@@ -169,7 +170,7 @@ export default {
   },
   methods: {
     bucketOf: function (it) {
-      console.log(it)
+      // console.log(it)
       var code
       if (/^[=@]/.exec(it)) {
         return it[0]
@@ -183,7 +184,7 @@ export default {
     storeAll: function () {
       var vm = this
       this.$getItem('p' + this.url + 'ck/' + vm.num).then((d) => {
-        console.log(d)
+        // console.log(d)
         if (!d) {
           vm.$axios.get('p' + vm.url + 'ck/' + vm.num + '.txt').then((response) => {
             vm.$setItem('p' + vm.url + 'ck/' + vm.num, response.data, function (d) {
@@ -201,11 +202,11 @@ export default {
     fillBucket: function (id, bucket, cb) {
       var vm = this
       this.$getItem('p' + this.url + 'ck/' + bucket).then((d) => {
-        console.log(d)
+        // console.log(d)
         if (d) {
           var key = escape(id)
           var part = d[key]
-          console.log(part)
+          // console.log(part)
           this.data = part
           // console.log(this.data)
           if (this.data) {
@@ -228,7 +229,7 @@ export default {
             part = part.slice(0, idx) */
             var key = escape(id)
             var part = response.data[key]
-            console.log(part)
+            // console.log(part)
             vm.data = part
             // console.log(this.data)
             if (vm.data) {
@@ -347,7 +348,7 @@ export default {
           ps.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;')
           if (T) { ts.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;') }
         }
-        console.log(ps)
+        // console.log(ps)
         return arr.map((k, idx) => {
           k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
           var obj = {

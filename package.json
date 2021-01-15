@@ -20,7 +20,7 @@
     "quasar": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-zh-stroker": "^0.1.15",
+    "react-zh-stroker": "^0.2.0",
     "vlf": "^1.1.0",
     "vue-localforage": "^0.2.5",
     "vuera": "^0.2.7"
