@@ -23,9 +23,6 @@
           <q-icon name="play_arrow" v-if="!playing"/>
           <q-icon name="pause" v-else/>
         </a>
-
-        <!-- <word :data="moe" :progress=1.0" ></word> -->
-
         <span v-if = "data.r">
           <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
         </span>
@@ -38,6 +35,12 @@
         <a name = "print" class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
           <q-icon name="print" />
         </a>
+        <a name = "showDraw" class="red no-print" @click = "showDraw = !showDraw; idx=0; progress=progress.map(()=> { return 0})" :title="s('筆順')">
+          <q-icon name="edit" />
+        </a>
+        <span id="word" v-show="showDraw" :style="{width: w.split('').length * 100 + 'vmax', transform: 'scale(' + 0.8 / w.split('').length + ')'}">
+          <word v-for = "(m,idx) in moes" :key="idx" :data="m" :progress="progress[idx]" ></word>
+        </span>
         <!--
         <a class="si no-print" v-if = "!si" @click="s1(true)">
           簡
@@ -45,6 +48,7 @@
         <a class="ti no-print" v-else @click="s1(false)">
           正
         </a> -->
+        <div class="thin-only divider" v-show="showDraw" :style="{margin: 20 / w.split('').length + 'em'} "></div>
         <div v-if = "data">
           <ol>
             <li v-for = "d in data.h[idx].d" :key = "d.f">
@@ -113,8 +117,7 @@
 <script>
 import { sify } from 'chinese-conv'
 // eslint-disable-next-line
-// import { default as RZS } from 'react-zh-stroker'
-// const { data, Word } = RZS
+import { data, Word } from 'react-zh-stroker'
 
 // console.log(data)
 // console.log(Word)
@@ -122,9 +125,10 @@ import { sify } from 'chinese-conv'
 export default {
   name: 'PageIndex',
   // components: { Word },
+  components: { Word },
   data () {
     return {
-      // moe: '',
+      moes: [],
       w: '',
       bs: [],
       data: null,
@@ -133,7 +137,10 @@ export default {
       title: '萌典',
       url: 'a',
       err: false,
-      num: 0
+      num: 0,
+      progress: [],
+      showDraw: false,
+      idx: 0
     }
   },
   props: ['stars', 'si'],
@@ -145,18 +152,27 @@ export default {
     }
   },
   mounted () {
-    // var vm = this
-    // var code = vm.w.charCodeAt(0).toString(16)
-    // this.$axios.get('/json/' + code +'.json').then((response) => {
-    //  console.log(response.data)
-    //  this.moe = data.computeLength(response.data)
-    // })
-
     this.set()
     this.s1()
     this.storeAll()
+    setTimeout(this.startDraw, 1000)
   },
   methods: {
+    startDraw () {
+      setInterval(this.draw, 1)
+    },
+    draw () {
+      console.log(this.progress)
+      this.progress = this.progress.map((o) => { return parseInt(o) })
+      this.progress[this.idx] += 25
+      if (this.progress[this.idx] >= 10000) {
+        this.idx++
+      }
+      if (this.idx === this.progress.length) {
+        this.idx = 0
+        this.progress = this.progress.map(() => { return 0 })
+      }
+    },
     bucketOf: function (it) {
       console.log(it)
       var code
@@ -292,6 +308,19 @@ export default {
       // console.log(this.w)
       // console.log(this.bucketOf(this.w))
       this.fillBucket(this.w, this.bucketOf(this.w))
+      var vm = this
+      console.log(this.w)
+      var list = vm.w.split('')
+      this.progress = list.map(() => { return 0 })
+      this.idx = 0
+      this.moes = []
+      for (var i = 0; i < list.length; i++) {
+        var code = list[i].charCodeAt(0).toString(16)
+        this.$axios.get('/json/' + code + '.json').then((response) => {
+          console.log(response.data)
+          this.moes.push(data.computeLength(response.data))
+        })
+      }
     },
     play () {
       if (!this.playing) {
@@ -420,6 +449,24 @@ export default {
 
 <style type="text/css" scoped="">
 
+  .divider {
+  }
+
+  #word {
+    position: absolute;
+    transform-origin: top left;
+  }
+
+  #word div {
+    display: inline-block;
+  }
+
+  @media screen and (max-width: 600px) {
+    #word {
+      display: block;
+    }
+  }
+
   .word {
     padding: 0 1em;
   }
@@ -482,6 +529,11 @@ export default {
     font-size: 40px;
   }
 
+  .red {
+    color: #c33;
+    margin-left: 1em;
+  }
+
   .p {
     position: absolute;
     bottom: 2.2em;
@@ -522,5 +574,4 @@ export default {
   .soc .q-icon {
     color: white;
   }
-
 </style>

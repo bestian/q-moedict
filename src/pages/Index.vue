@@ -24,8 +24,6 @@
           <q-icon name="pause" v-else/>
         </a>
 
-        <word :data="moe" :progress="1.0" ></word>
-
         <span v-if = "data.r">
           <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
         </span>
@@ -38,6 +36,13 @@
         <a name = "print" class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
           <q-icon name="print" />
         </a>
+        <a name = "showDraw" class="red no-print" @click = "showDraw = !showDraw; progress=0" :title="s('筆順')">
+          <q-icon name="edit" />
+        </a>
+        <span id="word" v-show="showDraw" :style="{width: w.split('').length * 100 + 'vmax', transform: 'scale(' + 0.8 / w.split('').length + ')'}">
+          <word :data="moe" :progress="progress" ></word>
+        </span>
+        <div class="thin-only divider" v-show="showDraw" :style="{margin: 20 / w.split('').length + 'em'} "></div>
         <!--
         <a class="si no-print" v-if = "!si" @click="s1(true)">
           簡
@@ -117,9 +122,6 @@ import { data, Word } from 'react-zh-stroker'
 // import { default as RZS } from 'react-zh-stroker'
 // const { data, Word } = RZS
 
-console.log(data)
-console.log(Word)
-
 export default {
   name: 'PageIndex',
   components: { Word },
@@ -134,7 +136,9 @@ export default {
       title: '萌典',
       url: 'a',
       err: false,
-      num: 0
+      num: 0,
+      progress: 0,
+      showDraw: false
     }
   },
   // components: { 'word': Word },
@@ -147,6 +151,7 @@ export default {
     }
   },
   mounted () {
+    this.startDraw()
     this.$axios.get('/json/840c.json').then((response) => {
       console.log(response.data)
       this.moe = data.computeLength(response.data)
@@ -169,6 +174,15 @@ export default {
     this.storeAll()
   },
   methods: {
+    startDraw () {
+      setInterval(this.draw, 1)
+    },
+    draw () {
+      this.progress += 25
+      if (this.progress >= 10000) {
+        this.progress = 0
+      }
+    },
     bucketOf: function (it) {
       // console.log(it)
       var code
@@ -431,6 +445,24 @@ export default {
 
 <style type="text/css" scoped="">
 
+  .divider {
+  }
+
+  #word {
+    position: absolute;
+    transform-origin: top left;
+  }
+
+  #word div {
+    display: inline-block;
+  }
+
+  @media screen and (max-width: 600px) {
+    #word {
+      display: block;
+    }
+  }
+
   .word {
     padding: 0 1em;
   }
@@ -491,6 +523,11 @@ export default {
     color: #c33;
     margin-right: 1em;
     font-size: 40px;
+  }
+
+  .red {
+    color: #c33;
+    margin-left: 1em;
   }
 
   .p {
