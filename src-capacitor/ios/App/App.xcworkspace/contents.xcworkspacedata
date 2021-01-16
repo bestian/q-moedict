@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/tsung-haotang/Documents/GitHub/q-moedict/src-capacitor/ios/App/&#x840c;&#x5178;.xcodeproj">
+      location = "group:App.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
