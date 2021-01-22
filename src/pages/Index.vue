@@ -278,6 +278,7 @@ export default {
     },
     set (k) {
       this.w = k || this.$route.params.id
+      this.remember(this.w)
       this.pre = ''
       this.url = 'a'
       this.title = '萌典'
@@ -328,6 +329,14 @@ export default {
         document.getElementById('au').pause()
         this.playing = false
       }
+    },
+    remember (w) {
+      var arr = this.$q.localStorage.getItem('res')
+      if (!arr) { arr = [] }
+      arr = arr.filter((x) => { return x !== w })
+      arr.unshift(w)
+      this.$q.localStorage.set('res', arr)
+      this.$emit('updateRes')
     },
     star (w) {
       var arr = this.$q.localStorage.getItem('words')

@@ -22,19 +22,19 @@
           <button :aria-label="s('查詢')" @click="$router.push('/w/' + pre + myKey)">{{ s('查詢') }}</button>
         </q-toolbar-title>
 
-        <a name="sify" class="btn si no-print" v-if = "!si" @click="s1(true)" :title="s('轉成簡體')">
+        <a name="sify" class="big btn si no-print" v-if = "!si" @click="s1(true)" :title="s('轉成簡體')">
           簡
         </a>
-        <a name="tify" class="btn ti no-print" v-else @click="s1(false)" :title="s('轉成正體')">
+        <a name="tify" class="big btn ti no-print" v-else @click="s1(false)" :title="s('轉成正體')">
           正
         </a>
 
-        <a name="print" class="fat-only btn no-print" @click="leftDrawerOpen = false" onclick = "setTimeout(() => {window.print()}, 500)"><q-icon name="print" :title="s('列印本頁')"/>
+        <a name="print" class="big fat-only btn no-print" @click="leftDrawerOpen = false" onclick = "setTimeout(() => {window.print()}, 500)"><q-icon name="print" :title="s('列印本頁')"/>
         </a>
 
-        <a name="radom" class="btn no-print" @click = "randomRoute()" :title="s('隨機條目')"><q-icon name="ion-shuffle" /></a>
+        <a name="radom" class="big btn no-print" @click = "randomRoute()" :title="s('隨機條目')"><q-icon name="ion-shuffle" /></a>
 
-        <a name="github" class="fat-only btn no-print" href="https://www.github.com/bestian/q-moedict/" target="_blank" :title="s('源碼')" rel="noreferrer noopener">
+        <a name="github" class="big fat-only btn no-print" href="https://www.github.com/bestian/q-moedict/" target="_blank" :title="s('源碼')" rel="noreferrer noopener">
           <q-icon name = "ion-logo-github" />
         </a>
       </q-toolbar>
@@ -115,12 +115,15 @@
       <q-item>
         <b>{{ s('近期搜尋') }}</b>
       </q-item>
+      <q-item clickable v-for = "(k, idx) in res.slice(0,6)" :to = "'/w/' + k" :key="k + idx" v-show="k">
+        {{s(k)}}
+      </q-item>
     </q-list>
     </q-drawer>
 
     <q-page-container>
       <div class="gcse-search"></div>
-      <router-view @updateStars = "updateStars" @updateSi = "s1" @pre1="pre1" :stars="stars" @closeD = "closeD" :si="si"/>
+      <router-view @updateStars = "updateStars" @updateRes = "updateRes" @updateSi = "s1" @pre1="pre1" :stars="stars" @closeD = "closeD" :si="si"/>
     </q-page-container>
   </q-layout>
 </template>
@@ -137,6 +140,7 @@ export default {
       url: 'a',
       data: [],
       stars: [],
+      res: [],
       leftDrawerOpen: false,
       n: 100,
       si: false
@@ -215,6 +219,9 @@ export default {
     },
     updateStars () {
       this.stars = this.$q.localStorage.getItem('words') || []
+    },
+    updateRes () {
+      this.res = this.$q.localStorage.getItem('res') || []
     }
   },
   mounted () {

@@ -56,22 +56,22 @@
                 <span class="type">{{ s(p(d.type)[0]) }}</span>：
               </span>
               <span class="def" v-if = "d.f">
-                <router-link v-for = "(r, idx) in p(d.f)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)" :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                <router-link class="big" v-for = "(r, idx) in p(d.f)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)" :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
               </span>
               <div v-if = "d.e">
                 <div v-for = "e in d.e" :key="e">
-                  <router-link v-for = "(r, idx) in p(e)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                  <router-link class="big" v-for = "(r, idx) in p(e)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
                 </div>
               </div>
               <br/>
               <ol>
                 <li v-for = "q in d.q" :key="q">
-                  <router-link v-for = "(r, idx) in p(q)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                  <router-link class="big" v-for = "(r, idx) in p(q)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
                 </li>
               </ol>
               <span class="antonyms" v-if = "d.a">
                 <span class="type">反</span>
-                  <router-link v-for = "(r, idx) in p(d.a)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                  <router-link class="big" v-for = "(r, idx) in p(d.a)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
               </span>
               <br/>
             </li>
@@ -162,7 +162,7 @@ export default {
       setInterval(this.draw, 1)
     },
     draw () {
-      console.log(this.progress)
+      // console.log(this.progress)
       this.progress = this.progress.map((o) => { return parseInt(o) })
       this.progress[this.idx] += 25
       if (this.progress[this.idx] >= 10000) {
@@ -174,7 +174,7 @@ export default {
       }
     },
     bucketOf: function (it) {
-      console.log(it)
+      // console.log(it)
       var code
       if (/^[=@]/.exec(it)) {
         return it[0]
@@ -188,11 +188,11 @@ export default {
     storeAll: function () {
       var vm = this
       this.$getItem('p' + this.url + 'ck/' + vm.num).then((d) => {
-        console.log(d)
+        // console.log(d)
         if (!d) {
           vm.$axios.get('p' + vm.url + 'ck/' + vm.num + '.txt').then((response) => {
             vm.$setItem('p' + vm.url + 'ck/' + vm.num, response.data, function (d) {
-              console.log(response.data)
+              // console.log(response.data)
               vm.num += 1
               vm.storeAll()
             })
@@ -206,11 +206,11 @@ export default {
     fillBucket: function (id, bucket, cb) {
       var vm = this
       this.$getItem('p' + this.url + 'ck/' + bucket).then((d) => {
-        console.log(d)
+        // console.log(d)
         if (d) {
           var key = escape(id)
           var part = d[key]
-          console.log(part)
+          // console.log(part)
           this.data = part
           // console.log(this.data)
           if (this.data) {
@@ -268,6 +268,7 @@ export default {
     },
     set (k) {
       this.w = k || this.$route.params.id
+      this.remember(this.w)
       this.pre = ''
       this.url = 'a'
       this.title = '萌典'
@@ -317,7 +318,7 @@ export default {
       for (var i = 0; i < list.length; i++) {
         var code = list[i].charCodeAt(0).toString(16)
         this.$axios.get('./json/' + code + '.json').then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           this.moes.push(data.computeLength(response.data))
         })
       }
@@ -331,6 +332,15 @@ export default {
         document.getElementById('au').pause()
         this.playing = false
       }
+    },
+    remember (w) {
+      console.log('remember:' + w)
+      var arr = this.$q.localStorage.getItem('res')
+      if (!arr) { arr = [] }
+      arr = arr.filter((x) => { return x !== w })
+      arr.unshift(w)
+      this.$q.localStorage.set('res', arr)
+      this.$emit('updateRes')
     },
     star (w) {
       var arr = this.$q.localStorage.getItem('words')
@@ -365,7 +375,7 @@ export default {
           ps.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;')
           if (T) { ts.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;') }
         }
-        console.log(ps)
+        // console.log(ps)
         return arr.map((k, idx) => {
           k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
           var obj = {
