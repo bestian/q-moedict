@@ -112,6 +112,9 @@
       <q-item clickable v-for = "k in stars" :to = "'/w/' + k" :key="k">
         {{s(k)}}
       </q-item>
+      <q-item>
+        <b>{{ s('近期搜尋') }}</b>
+      </q-item>
     </q-list>
     </q-drawer>
 
