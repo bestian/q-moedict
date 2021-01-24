@@ -107,13 +107,13 @@
       </q-menu>
     </q-btn>
       <q-item>
-        <b>{{ s('已加星號') }}</b>
+        <b><q-icon name="star"/>{{ s('已加星號') }}</b>
       </q-item>
       <q-item clickable v-for = "k in stars" :to = "'/w/' + k" :key="k">
         {{s(k)}}
       </q-item>
       <q-item>
-        <b>{{ s('近期搜尋') }}</b>
+        <b><q-icon name="ion-time"/>{{ s('近期搜尋') }}</b>
       </q-item>
       <q-item clickable v-for = "(k, idx) in res.slice(0,6)" :to = "'/w/' + k" :key="k + idx" v-show="k">
         {{s(k)}}
