@@ -51,6 +51,7 @@
           正
         </a> -->
         <div v-if = "data">
+          <span class="type">{{ s('篆') }}</span>：<img class="small" :src = "'https://www.moedict.tw/' + w + '.png?font=ebas'" :style="{width: 100 * w.split('').length + 'px', margin: -20 * w.split('').length + 'px 0'}"/>
           <ol>
             <li v-for = "d in data.h[idx].d" :key = "d.f">
               <span v-if = "d.type">
@@ -153,7 +154,7 @@ export default {
   mounted () {
     this.startDraw()
     this.$axios.get('./json/840c.json').then((response) => {
-      console.log(response.data)
+      // console.log(response.data)
       this.moe = data.computeLength(response.data)
     })
     this.pre = this.$q.localStorage.getItem('pre') || this.pre
@@ -222,7 +223,7 @@ export default {
           var part = d[key]
           // console.log(part)
           this.data = part
-          // console.log(this.data)
+          console.log(this.data)
           if (this.data) {
             this.bs = this.data.h.map((o) => { return o.b || '' })
           }
@@ -578,6 +579,9 @@ export default {
 
   .soc .q-icon {
     color: white;
+  }
+
+  .small {
   }
 
 </style>

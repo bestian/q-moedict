@@ -50,6 +50,7 @@
         </a> -->
         <div class="thin-only divider" v-show="showDraw" :style="{margin: 20 / w.split('').length + 'em'} "></div>
         <div v-if = "data">
+          <span class="type">{{ s('篆') }}</span>：<img class="small" :src = "'https://www.moedict.tw/' + w + '.png?font=ebas'" :style="{width: 100 * w.split('').length + 'px', margin: -20 * w.split('').length + 'px 0'}"/>
           <ol>
             <li v-for = "d in data.h[idx].d" :key = "d.f">
               <span v-if = "d.type">
@@ -583,5 +584,8 @@ export default {
 
   .soc .q-icon {
     color: white;
+  }
+
+  .small {
   }
 </style>
