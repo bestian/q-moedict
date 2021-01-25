@@ -1,7 +1,7 @@
 {
   "name": "org.moedict.app",
   "displayName": "萌典",
-  "version": "3.0.0",
+  "version": "3.0.3",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
