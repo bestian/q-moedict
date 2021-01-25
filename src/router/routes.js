@@ -9,7 +9,9 @@ const routes = [
       { path: 'w/:id', component: () => import('pages/Word.vue') },
       { path: 'about', component: () => import('pages/About.vue') },
       { path: 'list', redirect: 'list/成語' },
-      { path: 'list/:id', component: () => import('pages/List.vue') }
+      { path: 'list/:id', component: () => import('pages/List.vue') },
+      { path: 'head', redirect: 'head/@' },
+      { path: 'head/:id', component: () => import('pages/Head.vue') }
     ]
   },
 

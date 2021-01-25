@@ -25,7 +25,7 @@
         </a>
 
         <span v-if = "data.r">
-          <span class="radical">{{ p(data.r)[0] }}</span> + {{ data.n }} = {{ data.c }}
+          <router-link class="radical" :to="'/head/' + p(data.r)[0]">{{ p(data.r)[0] }}</router-link> + {{ data.n }} = {{ data.c }}
         </span>
         <a name = "star" class ="star" v-if = "stars.indexOf(pre + w) == -1" @click = "star(pre + w)">
           <q-icon name="star_outline" />
@@ -582,6 +582,10 @@ export default {
   }
 
   .small {
+  }
+
+  .radical {
+    color: black;
   }
 
 </style>
