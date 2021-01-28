@@ -3,16 +3,30 @@
     <div v-if="!err">
       <div v-for = "(b, idx) in bs" :key = "idx">
         <span v-for = "(y, i) in yindiao(w, bs[idx], data.h[idx].p, data.h[idx].T)" :key="i">
-          <h1>{{ y.w }}</h1>
+          <h1 class="stroke">{{ y.w }}</h1>
           <span id ="b">
             <span class="yindiao">
-              <span class = "yin"> {{y.yin}} </span>
-              <span class = "diao"> {{y.diao}} </span>
+              <span class = "yin stroke"> {{y.yin}} </span>
+              <span class = "diao stroke"> {{y.diao}} </span>
             </span>
             <span class = "p" v-show = "idx == 0 || pre !== ':'" :class="{ hakka: pre == ':'}" v-html = "y.pin"></span>
             <span class = "p" :class="{ hakka: pre == ':'}" v-show = "idx == 0 || pre !== ':'" > {{y.T}}</span>
           </span>
         </span>
+
+        <div class="print-only float right" v-for="k in [1,2,3]" :key= "k">
+          <span v-for = "(y, i) in yindiao(w, bs[idx], data.h[idx].p, data.h[idx].T)" :key="i">
+            <h1 class="stroke">{{ y.w }}</h1>
+            <span id ="b">
+              <span class="yindiao">
+                <span class = "yin stroke"> {{y.yin}} </span>
+                <span class = "diao stroke"> {{y.diao}} </span>
+              </span>
+              <span class = "no-print p stroke" v-show = "idx == 0 || pre !== ':'" :class="{ hakka: pre == ':'}" v-html = "y.pin"></span>
+              <span class = "no-print p stroke" :class="{ hakka: pre == ':'}" v-show = "idx == 0 || pre !== ':'" > {{y.T}}</span>
+            </span>
+          </span>
+        </div>
 
         <audio id="au" v-if = "data.h[idx]['=']">
           <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.mp3'" type="audio/mp3"/>
@@ -50,7 +64,7 @@
         </a> -->
         <div class="thin-only divider" v-show="showDraw" :style="{margin: 20 / w.split('').length + 'em'} "></div>
         <div v-if = "data">
-          <span class="type">{{ s('篆') }}</span>：<img class="small" :src = "'https://www.moedict.tw/' + w + '.png?font=ebas'" :style="{width: 100 * w.split('').length + 'px', margin: -20 * w.split('').length + 'px 0'}"/>
+          <span class="no-print"><span class="type">{{ s('篆') }}</span>：<img class="small" :src = "'https://www.moedict.tw/' + w + '.png?font=ebas'" :style="{width: 100 * w.split('').length + 'px', margin: -20 * w.split('').length + 'px 0'}"/></span>
           <ol>
             <li v-for = "d in data.h[idx].d" :key = "d.f">
               <span v-if = "d.type">

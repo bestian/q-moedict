@@ -40,6 +40,10 @@ a.big {
 	display: none;
 }
 
+.float.right {
+	float: right;
+}
+
 @media print {
 	.no-print, .gsc-control-cse {
 		display: none !important;
@@ -50,6 +54,12 @@ a.big {
 	}
 	.q-page {
         width: 100% !important;
+    }
+    .stroke {
+  		font-weight: 900;
+        text-stroke: 2px black;
+        -webkit-text-stroke: 2px black;
+        color: transparent;
     }
 }
 
