@@ -31,6 +31,8 @@
         <audio id="au" v-if = "data.h[idx]['=']">
           <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.mp3'" type="audio/mp3"/>
           <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
+          <source :src="'https://a7ff62cf9d5b13408e72-351edcddf20c69da65316dd74d25951e.ssl.cf1.rackcdn.com/1-' + data.h[idx]['='] + '.mp3'" type="audio/mp3"/>
+          <source :src="'https://a7ff62cf9d5b13408e72-351edcddf20c69da65316dd74d25951e.ssl.cf1.rackcdn.com/1-' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
         </audio>
 
         <audio id="au" v-if = "data.h[idx]['_']">
@@ -307,7 +309,7 @@ export default {
       if (this.w.match(/^(:)/)) {
         this.pre = ':'
         this.url = 'h'
-        this.title = '台灣閩南語'
+        this.title = '台灣客家語'
         this.w = this.w.replace(':', '')
       }
       this.$q.localStorage.set('pre', this.pre)
