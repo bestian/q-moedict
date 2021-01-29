@@ -46,9 +46,9 @@
         <a name = "unstar"  class ="star"  v-else @click="unstar(pre + w)">
           <q-icon name="star" />
         </a>
-        <a name = "print" class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
+        <!-- <a name = "print" class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
           <q-icon name="print" />
-        </a>
+        </a> -->
         <a name = "showDraw" class="red no-print" @click = "showDraw = !showDraw; idx=0; progress=progress.map(()=> { return 0})" :title="s('筆順')">
           <q-icon name="edit" />
         </a>
