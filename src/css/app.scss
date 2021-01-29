@@ -3,6 +3,24 @@
 body {
 	font-size: 18px;
 	font-feature-settings: "liga";
+	font-weight: normal;
+	font-family: Biaodian Pro Sans CNS,Noto Sans,Geneva,Segoe UI,MOEDICT,Fira Sans OT,Helvetica Neue,Helvetica,Arial,Zhuyin Heiti,Noto Sans CJK TC,Source Han Sans TW,Noto Sans T Chinese,Source Han Sans TWHK,Microsoft Jhenghei,微軟正黑體,Source Han Sans,Source Han Sans HK,Lantinghei TC,Heiti TC,黑體-繁,Lihei Pro,儷黑 pro,adobe 繁黑體 std,cwtex 明體,adobe 明體 std,PMingLiU,MingLiU,sans-serif,HanaMinA,HanaMinB,HAN NOM A,HAN NOM B,Han Heiti CNS,sans-serif;
+}
+
+h1 {
+	font-family: Biaodian Pro Serif CNS,Numeral LF Serif,MOEDICT,Fira Sans OT,Georgia,Times New Roman,Zhuyin Kaiti,TW-Kai-98_1,教育部標準楷書,kai-pc,CMEXc1,Biaukai,MOEDICT-IOS-KAI,DFKaiShu-SB-Estd-BF,全字庫正楷體,Kaiti TC,楷體-繁,文鼎ＰＬ新中楷,cwtext 楷書,cursive,serif,HanaMinA,HanaMinB,HAN NOM A,HAN NOM B,Han Kaiti CNS,cursive,serif;
+}
+
+.type, .radical {
+    background-color: #6b0000;
+    border-radius: 2px;
+    margin-right: .2em;
+    padding: 0 .1em;
+    color: white !important;
+}
+
+.red {
+	color: #6b0000;
 }
 
 a {

@@ -524,13 +524,6 @@ export default {
   .r::after {
   }
 
-  .type, .radical {
-    background-color: rgb(225,100,100);
-    border-radius: 2px;
-    margin-right: .2em;
-    padding: 0 .1em;
-  }
-
   .yindiao {
     display: inline-flex;
     align-items: center;
@@ -550,7 +543,6 @@ export default {
   }
 
   .red {
-    color: #c33;
     margin-left: 1em;
   }
 
