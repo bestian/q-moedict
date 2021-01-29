@@ -33,6 +33,11 @@
           <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
         </audio>
 
+        <audio id="au" v-if = "data.h[idx]['_']">
+          <source :src="'https://1763c5ee9859e0316ed6-db85b55a6a3fbe33f09b9245992383bd.ssl.cf1.rackcdn.com/0' + data.h[idx]['_'] + '.mp3'" type="audio/mp3"/>
+          <source :src="'https://1763c5ee9859e0316ed6-db85b55a6a3fbe33f09b9245992383bd.ssl.cf1.rackcdn.com/0' + data.h[idx]['_'] + '.ogg'" type="audio/mp3"/>
+        </audio>
+
         <a name ="play" class = "no-print" id = "play" @click = "play()" v-if = "data.h[idx]['=']">
           <q-icon name="play_arrow" v-if="!playing"/>
           <q-icon name="pause" v-else/>
@@ -235,7 +240,7 @@ export default {
         if (d) {
           var key = escape(id)
           var part = d[key]
-          // console.log(part)
+          console.log(part)
           this.data = part
           console.log(this.data)
           if (this.data) {
