@@ -1,5 +1,5 @@
 <template>
-  <q-page class="word">
+  <div class="box no-print" :style="{top: t + 5 + 'px', left: l + 5 + 'px'}">
     <div v-if="!err">
       <div v-for = "(b, idx) in bs" :key = "idx">
         <span v-for = "(y, i) in yindiao(w, bs[idx], data.h[idx].p, data.h[idx].T)" :key="i">
@@ -9,95 +9,34 @@
               <span class = "yin stroke"> {{y.yin}} </span>
               <span class = "diao stroke"> {{y.diao}} </span>
             </span>
-            <span class = "p" v-show = "idx == 0 || pre !== ':'" :class="{ hakka: pre == ':'}" v-html = "y.pin"></span>
-            <span class = "p" :class="{ hakka: pre == ':'}" v-show = "idx == 0 || pre !== ':'" > {{y.T}}</span>
           </span>
         </span>
-
-        <div class="print-only float right" v-for="k in [1,2,3]" :key= "k">
-          <span v-for = "(y, i) in yindiao(w, bs[idx], data.h[idx].p, data.h[idx].T)" :key="i">
-            <h1 class="stroke">{{ y.w }}</h1>
-            <span id ="b">
-              <span class="yindiao">
-                <span class = "yin stroke"> {{y.yin}} </span>
-                <span class = "diao stroke"> {{y.diao}} </span>
-              </span>
-              <span class = "no-print p stroke" v-show = "idx == 0 || pre !== ':'" :class="{ hakka: pre == ':'}" v-html = "y.pin"></span>
-              <span class = "no-print p stroke" :class="{ hakka: pre == ':'}" v-show = "idx == 0 || pre !== ':'" > {{y.T}}</span>
-            </span>
-          </span>
-        </div>
-
-        <audio id="au" v-if = "data.h[idx]['=']">
-          <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.mp3'" type="audio/mp3"/>
-          <source :src="'https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
-          <source :src="'https://a7ff62cf9d5b13408e72-351edcddf20c69da65316dd74d25951e.ssl.cf1.rackcdn.com/1-' + data.h[idx]['='] + '.mp3'" type="audio/mp3"/>
-          <source :src="'https://a7ff62cf9d5b13408e72-351edcddf20c69da65316dd74d25951e.ssl.cf1.rackcdn.com/1-' + data.h[idx]['='] + '.ogg'" type="audio/mp3"/>
-        </audio>
-
-        <audio id="au" v-if = "data.h[idx]['_']">
-          <source :src="'https://1763c5ee9859e0316ed6-db85b55a6a3fbe33f09b9245992383bd.ssl.cf1.rackcdn.com/0' + data.h[idx]['_'] + '.mp3'" type="audio/mp3"/>
-          <source :src="'https://1763c5ee9859e0316ed6-db85b55a6a3fbe33f09b9245992383bd.ssl.cf1.rackcdn.com/0' + data.h[idx]['_'] + '.ogg'" type="audio/mp3"/>
-        </audio>
-
-        <a name ="play" class = "no-print" id = "play" @click = "play()" v-if = "data.h[idx]['='] || data.h[idx]['_']">
-          <q-icon name="play_arrow" v-if="!playing"/>
-          <q-icon name="pause" v-else/>
-        </a>
-        <span v-if = "data.r">
-          <router-link class="radical" :to="'/head/' + p(data.r)[0]">{{ p(data.r)[0] }}</router-link> + {{ data.n }} = {{ data.c }}
-        </span>
-        <a name = "star" class ="star" v-if = "stars.indexOf(pre + w) == -1" @click = "star(pre + w)">
-          <q-icon name="star_outline" />
-        </a>
-        <a name = "unstar"  class ="star"  v-else @click="unstar(pre + w)">
-          <q-icon name="star" />
-        </a>
-        <!-- <a name = "print" class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
-          <q-icon name="print" />
-        </a> -->
-        <a name = "showDraw" class="red no-print" @click = "showDraw = !showDraw; idx=0; progress=progress.map(()=> { return 0})" :title="s('筆順')">
-          <q-icon name="edit" />
-        </a>
-        <span id="word" v-show="showDraw" :style="{width: w.split('').length * 100 + 'vmax', transform: 'scale(' + 0.8 / w.split('').length + ')'}">
-          <word v-for = "(m,idx) in moes" :key="idx" :data="m" :progress="progress[idx]" ></word>
-        </span>
-        <!--
-        <a class="si no-print" v-if = "!si" @click="s1(true)">
-          簡
-        </a>
-        <a class="ti no-print" v-else @click="s1(false)">
-          正
-        </a> -->
-        <div class="thin-only divider" v-show="showDraw" :style="{margin: 20 / w.split('').length + 'em'} "></div>
+        <hr class="topper">
         <div v-if = "data">
-          <span class="no-print"><span class="type">{{ s('篆') }}</span>：<img class="small" :src = "'https://www.moedict.tw/' + w + '.png?font=ebas'" :style="{width: 100 * w.split('').length + 'px', margin: -20 * w.split('').length + 'px 0'}"/></span>
-          <ol>
-            <li v-for = "d in data.h[idx].d" :key = "d.f">
+            <div v-for = "d in data.h[idx].d" :key = "d.f">
               <span v-if = "d.type">
                 <span class="type">{{ s(p(d.type)[0]) }}</span>：
               </span>
               <span class="def" v-if = "d.f">
-                <router-link class="big" v-for = "(r, idx) in p(d.f)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                <router-link class="big" v-for = "(r, idx) in p(d.f)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)" :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
               </span>
               <div v-if = "d.e">
                 <div v-for = "e in d.e" :key="e">
-                  <router-link class="big" v-for = "(r, idx) in p(e)" :to = "'/w/' + pre + r" :key = "r+idx" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                  <router-link class="big" v-for = "(r, idx) in p(e)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
                 </div>
               </div>
               <br/>
               <ol>
                 <li v-for = "q in d.q" :key="q">
-                  <router-link class="big" v-for = "(r, idx) in p(q)" :to = "'/w/' + pre + r" :key = "r+idx" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                  <router-link class="big" v-for = "(r, idx) in p(q)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
                 </li>
               </ol>
               <span class="antonyms" v-if = "d.a">
                 <span class="type">反</span>
-                  <router-link class="big" v-for = "(r, idx) in p(d.a)" :to = "'/w/' + pre + r" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                  <router-link class="big" v-for = "(r, idx) in p(d.a)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
               </span>
               <br/>
-            </li>
-          </ol>
+            </div>
         </div>
         <span class="antonyms" v-if = "data.English">
           <span class="type">英</span> {{data.English}}<br/>
@@ -116,44 +55,19 @@
     <div class="print-only">
       <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://www.moedict.tw/' + pre + w + '&choe=UTF-8'" />
     </div>
-    <br/>
-    <div class = "soc no-print">
-      <q-btn size="xs" color = "primary" class="facebook"  aria-label="facebook">
-        <a name = "facebook" :href="'https://www.facebook.com/sharer/sharer.php?u=https://bestian.github.io/q-moedict/#/w/' + pre + w" target="_blank" rel="noreferrer noopener">
-          <q-icon name = "fas fa-share-square" />
-          <q-icon name = "fab fa-facebook-f" />
-          Facebook
-        </a>
-      </q-btn>
-      <q-btn size="xs" color = "secondary" class="twitter"  aria-label="twitter">
-        <a name = "twitter" :href="'https://twitter.com/share?text=' + w + '&url=https://bestian.github.io/q-moedict/#/w/' + pre + w" target="_blank" rel="noreferrer noopener">
-          <q-icon name = "fas fa-share-square" />
-          <q-icon name = "fab fa-twitter" />
-          Twitter
-        </a>
-      </q-btn>
-    </div>
-    <box :t="t" :l="l" :w="boxW" v-show="showBox"></box>
-  </q-page>
+  </div>
 </template>
 
 <script>
 import { sify } from 'chinese-conv'
 // eslint-disable-next-line
-import { data, Word } from 'react-zh-stroker'
-import Box from '../components/Box.vue'
 
 export default {
-  name: 'Word',
-  components: { Word, Box },
+  name: 'PageIndex',
   data () {
     return {
-      showBox: false,
-      boxW: '萌',
-      t: 0,
-      l: 0,
+      w2: '',
       moes: [],
-      w: '',
       bs: [],
       data: null,
       playing: false,
@@ -167,43 +81,12 @@ export default {
       idx: 0
     }
   },
-  props: ['stars', 'si'],
-  meta () {
-    return {
-      // this accesses the "title" property in your Vue "data";
-      // whenever "title" prop changes, your meta will automatically update
-      title: this.w + ' - ' + this.title
-    }
-  },
+  props: ['stars', 'si', 't', 'l', 'w'],
   mounted () {
     this.set()
     this.s1()
-    this.storeAll()
-    setTimeout(this.startDraw, 1000)
   },
   methods: {
-    bo (w, e) {
-      var vm = this
-      if (!this.dis(w)) {
-        setTimeout(function () {
-          vm.showBox = true
-        }, 300)
-        this.boxW = w
-        // console.log(e)
-        if (e.clientX < window.innerWidth - 300) {
-          this.l = e.clientX
-        } else {
-          this.l = e.clientX - 310
-        }
-        if (e.clientH < e.screenY - 300) {
-          this.t = e.clientY
-        } else {
-          this.t = e.clientY - 310
-        }
-      } else {
-        this.showBox = false
-      }
-    },
     startDraw () {
       setInterval(this.draw, 1)
     },
@@ -231,24 +114,6 @@ export default {
       }
       return code % (this.url === 'a' ? 1024 : 128)
     },
-    storeAll: function () {
-      var vm = this
-      this.$getItem('p' + this.url + 'ck/' + vm.num).then((d) => {
-        // console.log(d)
-        if (!d) {
-          vm.$axios.get('p' + vm.url + 'ck/' + vm.num + '.txt').then((response) => {
-            vm.$setItem('p' + vm.url + 'ck/' + vm.num, response.data, function (d) {
-              // console.log(response.data)
-              vm.num += 1
-              vm.storeAll()
-            })
-          })
-        } else {
-          vm.num += 1
-          vm.storeAll()
-        }
-      })
-    },
     fillBucket: function (id, bucket, cb) {
       var vm = this
       this.$getItem('p' + this.url + 'ck/' + bucket).then((d) => {
@@ -256,7 +121,7 @@ export default {
         if (d) {
           var key = escape(id)
           var part = d[key]
-          console.log(part)
+          // console.log(part)
           this.data = part
           // console.log(this.data)
           if (this.data) {
@@ -279,7 +144,7 @@ export default {
             part = part.slice(0, idx) */
             var key = escape(id)
             var part = response.data[key]
-            console.log(part)
+            // console.log(part)
             vm.data = part
             // console.log(this.data)
             if (vm.data) {
@@ -313,28 +178,28 @@ export default {
       this.$emit('updateSi')
     },
     set (k) {
-      this.w = k || this.$route.params.id
       this.remember(this.w)
       this.pre = ''
       this.url = 'a'
       this.title = '萌典'
+      this.w2 = this.w
       if (this.w.match(/^(~)/)) {
         this.pre = '~'
         this.url = 'c'
         this.title = '兩岸萌典'
-        this.w = this.w.replace('~', '')
+        this.w2 = this.w.replace('~', '')
       }
       if (this.w.match(/^(')/)) {
         this.pre = '\''
         this.url = 't'
         this.title = '台灣閩南語'
-        this.w = this.w.replace('\'', '')
+        this.w2 = this.w.replace('\'', '')
       }
       if (this.w.match(/^(:)/)) {
         this.pre = ':'
         this.url = 'h'
         this.title = '台灣客家語'
-        this.w = this.w.replace(':', '')
+        this.w2 = this.w.replace(':', '')
       }
       this.$q.localStorage.set('pre', this.pre)
       this.$q.localStorage.set('url', this.url)
@@ -354,30 +219,13 @@ export default {
       this.$forceUpdate() */
       // console.log(this.w)
       // console.log(this.bucketOf(this.w))
-      this.fillBucket(this.w, this.bucketOf(this.w))
+      this.fillBucket(this.w2, this.bucketOf(this.w2))
       var vm = this
-      console.log(this.w)
-      var list = vm.w.split('')
+      console.log(this.w2)
+      var list = vm.w2.split('')
       this.progress = list.map(() => { return 0 })
       this.idx = 0
       this.moes = []
-      for (var i = 0; i < list.length; i++) {
-        var code = list[i].charCodeAt(0).toString(16)
-        this.$axios.get('./json/' + code + '.json').then((response) => {
-          // console.log(response.data)
-          this.moes.push(data.computeLength(response.data))
-        })
-      }
-    },
-    play () {
-      if (!this.playing) {
-        document.getElementById('au').load()
-        document.getElementById('au').play()
-        this.playing = true
-      } else {
-        document.getElementById('au').pause()
-        this.playing = false
-      }
     },
     remember (w) {
       console.log('remember:' + w)
@@ -455,7 +303,7 @@ export default {
         if (ws.indexOf('，') > -1) {
           arr.splice(ws.indexOf('，'), 0, '')
           ps.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;')
-          if (T) { ts.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;&nbsp;&nbsp;') }
+          if (T) { ts.splice(ws.indexOf('，'), 0, '&nbsp;&nbsp;') }
         }
         return w.split('').map((k, idx) => {
           k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
@@ -495,8 +343,7 @@ export default {
     }
   },
   watch: {
-    $route (to, from) {
-      console.log('w')
+    w (to, from) {
       this.set()
     }
   }
@@ -504,8 +351,21 @@ export default {
 </script>
 
 <style type="text/css" scoped="">
+  .box {
+    z-index: 999999;
+    width: 300px;
+    height: 300px !important;
+    position: fixed;
+    background-color: #ddd;
+    overflow: hidden !important;
+    padding: 0 1em;
+    border: 3px solid gray;
+    border-radius: 5px;
+    box-shadow: #d4d4d4 0 3px 3px;
+  }
 
-  .divider {
+  .topper {
+    margin-top: -1.5em;
   }
 
   #word {
@@ -528,7 +388,7 @@ export default {
   }
 
   h1 {
-    font-size: 64px;
+    font-size: 22px;
     display: inline;
     margin-right: .3em;
   }
@@ -538,9 +398,9 @@ export default {
     right: .5em;
     top: .9em;
     display: inline-block;
-    font-size: 24px;
+    font-size: 14px;
     width: 1em;
-    height: 4em;
+    height: 1em;
     overflow: visible;
   }
 
@@ -570,12 +430,6 @@ export default {
 
   .yin {
     line-height: 1em;
-  }
-
-  #play {
-    color: #c33;
-    margin-right: 1em;
-    font-size: 40px;
   }
 
   .red {
@@ -628,5 +482,9 @@ export default {
 
   .radical {
     color: black;
+  }
+
+  a, span {
+    font-size: 14px;
   }
 </style>
