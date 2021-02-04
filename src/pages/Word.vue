@@ -78,22 +78,22 @@
                 <span class="type">{{ s(p(d.type)[0]) }}</span>：
               </span>
               <span class="def" v-if = "d.f">
-                <router-link class="big" v-for = "(r, idx) in p(d.f)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                <router-link v-for = "(r, idx) in p(d.f)" :to = "'/w/' + pre + r" :key = "r+idx" :disabled="dis(r)" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
               </span>
               <div v-if = "d.e">
                 <div v-for = "e in d.e" :key="e">
-                  <router-link class="big" v-for = "(r, idx) in p(e)" :to = "'/w/' + pre + r" :key = "r+idx" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                  <router-link v-for = "(r, idx) in p(e)" :to = "'/w/' + pre + r" :key = "r+idx" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
                 </div>
               </div>
               <br/>
               <ol>
                 <li v-for = "q in d.q" :key="q">
-                  <router-link class="big" v-for = "(r, idx) in p(q)" :to = "'/w/' + pre + r" :key = "r+idx" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                  <router-link v-for = "(r, idx) in p(q)" :to = "'/w/' + pre + r" :key = "r+idx" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
                 </li>
               </ol>
               <span class="antonyms" v-if = "d.a">
                 <span class="type">反</span>
-                  <router-link class="big" v-for = "(r, idx) in p(d.a)" :to = "'/w/' + pre + r" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
+                  <router-link v-for = "(r, idx) in p(d.a)" :to = "'/w/' + pre + r" @mouseover.native = "bo(r, $event)" @mouseout.native = "showBox = false" :key = "r+idx" :disabled="dis(r)"  :event="!dis(r) ? 'click' : ''">{{ s(r) }}</router-link>
               </span>
               <br/>
             </li>
