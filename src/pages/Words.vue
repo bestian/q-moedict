@@ -144,7 +144,7 @@ import { data, Word } from 'react-zh-stroker'
 import Box from '../components/Box.vue'
 
 export default {
-  name: 'Word',
+  name: 'Words',
   components: { Word, Box },
   data () {
     return {
@@ -176,6 +176,7 @@ export default {
     }
   },
   mounted () {
+    console.log('m')
     this.set()
     this.s1()
     this.storeAll()
@@ -366,6 +367,7 @@ export default {
         this.$axios.get('./json/' + code + '.json').then((response) => {
           // console.log(response.data)
           this.moes.push(data.computeLength(response.data))
+          console.log(this.moes)
         })
       }
     },
@@ -389,6 +391,7 @@ export default {
       this.$emit('updateRes')
     },
     star (w) {
+      console.log('s')
       var arr = this.$q.localStorage.getItem('words')
       if (!arr) { arr = [] }
       arr = arr.filter((x) => { return x !== w })
