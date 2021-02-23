@@ -247,20 +247,45 @@ export default {
       return code % (this.url === 'a' ? 1024 : 128)
     },
     storeAll: function () {
+      // console.log('s')
       var vm = this
       this.$getItem('p' + this.url + 'ck/' + vm.num).then((d) => {
-        // console.log(d)
         if (!d) {
           vm.$axios.get('p' + vm.url + 'ck/' + vm.num + '.txt').then((response) => {
             vm.$setItem('p' + vm.url + 'ck/' + vm.num, response.data, function (d) {
-              console.log(response.data)
               vm.num += 1
               vm.storeAll()
             })
           })
         } else {
+          Object.keys(d).map(function (k) {
+            const n = 0 + vm.num
+            if (k && n) {
+              vm.fillBucket2(k, n)
+            }
+          })
           vm.num += 1
           vm.storeAll()
+        }
+      })
+    },
+    fillBucket2: function (id, bucket, cb) {
+      var vm = this
+      this.$getItem('p' + this.url + 'ck/' + bucket).then((d) => {
+        if (d) {
+          // console.log(d)
+          var key = id
+          var part = d[key]
+          console.log(vm.p(part.h[0].d[0].f).join(''))
+        } else {
+          vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
+            var key = id
+            var part = response.data[key]
+            console.log(vm.p(part.h[0].d[0].f).join(''))
+          }).catch(err => {
+            err = err + ''
+            // console.log(err)
+          })
         }
       })
     },
@@ -273,7 +298,7 @@ export default {
           var part = d[key]
           console.log(part)
           this.data = part
-          console.log(this.data)
+          // console.log(this.data)
           if (this.data) {
             this.bs = this.data.h.map((o) => { return o.b || '' })
           }
