@@ -276,12 +276,12 @@ export default {
           // console.log(d)
           var key = id
           var part = d[key]
-          console.log(vm.p(part.h[0].d[0].f).join(''))
+          // console.log(vm.p(part.h[0].d[0].f).join(''))
         } else {
           vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
             var key = id
             var part = response.data[key]
-            console.log(vm.p(part.h[0].d[0].f).join(''))
+            // console.log(vm.p(part.h[0].d[0].f).join(''))
           }).catch(err => {
             err = err + ''
             // console.log(err)
@@ -296,7 +296,7 @@ export default {
         if (d) {
           var key = escape(id)
           var part = d[key]
-          console.log(part)
+          // console.log(part)
           this.data = part
           // console.log(this.data)
           if (this.data) {

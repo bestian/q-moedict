@@ -176,7 +176,7 @@ export default {
     }
   },
   mounted () {
-    console.log('m')
+    // console.log('m')
     this.set()
     this.s1()
     this.storeAll()
@@ -257,7 +257,7 @@ export default {
         if (d) {
           var key = escape(id)
           var part = d[key]
-          console.log(part)
+          // console.log(part)
           this.data = part
           // console.log(this.data)
           if (this.data) {
@@ -280,7 +280,7 @@ export default {
             part = part.slice(0, idx) */
             var key = escape(id)
             var part = response.data[key]
-            console.log(part)
+            // console.log(part)
             vm.data = part
             // console.log(this.data)
             if (vm.data) {
@@ -357,7 +357,7 @@ export default {
       // console.log(this.bucketOf(this.w))
       this.fillBucket(this.w, this.bucketOf(this.w))
       var vm = this
-      console.log(this.w)
+      // console.log(this.w)
       var list = vm.w.split('')
       this.progress = list.map(() => { return 0 })
       this.idx = 0
@@ -367,7 +367,7 @@ export default {
         this.$axios.get('./json/' + code + '.json').then((response) => {
           // console.log(response.data)
           this.moes.push(data.computeLength(response.data))
-          console.log(this.moes)
+          // console.log(this.moes)
         })
       }
     },
@@ -382,7 +382,7 @@ export default {
       }
     },
     remember (w) {
-      console.log('remember:' + w)
+      // console.log('remember:' + w)
       var arr = this.$q.localStorage.getItem('res')
       if (!arr) { arr = [] }
       arr = arr.filter((x) => { return x !== w })
@@ -391,7 +391,7 @@ export default {
       this.$emit('updateRes')
     },
     star (w) {
-      console.log('s')
+      // console.log('s')
       var arr = this.$q.localStorage.getItem('words')
       if (!arr) { arr = [] }
       arr = arr.filter((x) => { return x !== w })
@@ -499,7 +499,7 @@ export default {
   },
   watch: {
     $route (to, from) {
-      console.log('w')
+      // console.log('w')
       this.set()
     }
   }
