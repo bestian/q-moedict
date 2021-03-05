@@ -6,7 +6,7 @@
     </div>
     <q-list class="no-print">
       <q-item class="l" v-for = "(l, idx) in has(list, myKey)" :key = "idx" v-show = "l && l.length > 0">
-        <b>{{idx}}畫：</b>
+        <b v-if = "!myKey">{{idx}}畫：</b>
         <span class="inner" v-if="!w || w == '@'">
           <router-link v-for = "item in l" :key="item" :to = "'/head/'+item">{{ item }} </router-link>
         </span>
@@ -68,11 +68,11 @@ export default {
       }
     },
     has (data, k) {
-      // console.log(data)
+      // console.log(JSON.stringify(data))
       if (!k) {
         return data
       }
-      return JSON.stringify(data).indexOf(k) > -1
+      return data.filter((o) => { return JSON.stringify(o).indexOf(k) > -1 })
     }
   },
   watch: {

@@ -274,13 +274,13 @@ export default {
       this.$getItem('p' + this.url + 'ck/' + bucket).then((d) => {
         if (d) {
           // console.log(d)
-          var key = id
-          var part = d[key]
+          // var key = id
+          // var part = d[key]
           // console.log(vm.p(part.h[0].d[0].f).join(''))
         } else {
           vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
-            var key = id
-            var part = response.data[key]
+            // var key = id
+            // var part = response.data[key]
             // console.log(vm.p(part.h[0].d[0].f).join(''))
           }).catch(err => {
             err = err + ''
