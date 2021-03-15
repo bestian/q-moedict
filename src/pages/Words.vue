@@ -115,6 +115,7 @@
     </div>
     <div class="print-only">
       <img :src = "'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=https://www.moedict.tw/' + pre + w + '&choe=UTF-8'" />
+      <img class="small " :src = "'./icon.jpg'" />
     </div>
     <br/>
     <div class = "soc no-print">
