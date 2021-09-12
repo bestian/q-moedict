@@ -1,6 +1,6 @@
 {
   "name": "q-moedict",
-  "version": "3.1.0",
+  "version": "3.1.2",
   "description": "A Quasar Framework app",
   "productName": "萌典",
   "author": "Bestian Tang <bestian@gmail.com>",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@capacitor/core": "^2.4.6",
-    "@quasar/cli": "^1.1.2",
+    "@quasar/cli": "^1.2.1",
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "chinese-conv": "^1.0.1",
