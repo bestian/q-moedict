@@ -213,7 +213,7 @@ export default {
       // console.log(this.progress)
       this.progress = this.progress.map((o) => { return parseInt(o) })
       this.progress[this.idx] += 25
-      if (this.progress[this.idx] >= 10000) {
+      if (this.progress[this.idx] > 12000) {
         this.idx++
       }
       if (this.idx === this.progress.length) {

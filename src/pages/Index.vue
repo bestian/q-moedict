@@ -231,7 +231,7 @@ export default {
     },
     draw () {
       this.progress += 25
-      if (this.progress >= 10000) {
+      if (this.progress > 12000) {
         this.progress = 0
       }
     },
