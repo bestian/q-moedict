@@ -19,6 +19,7 @@
     "axios": "^0.21.1",
     "chinese-conv": "^1.0.1",
     "core-js": "^3.6.5",
+    "electron-squirrel-startup": "^1.0.0",
     "localforage": "^1.9.0",
     "quasar": "^1.0.0",
     "react": "^17.0.1",
@@ -30,6 +31,10 @@
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.61",
+    "@electron-forge/maker-deb": "^6.0.0-beta.61",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.61",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.61",
+    "@electron-forge/maker-zip": "^6.0.0-beta.61",
     "@quasar/app": "^2.0.0",
     "babel-eslint": "^10.0.1",
     "devtron": "^1.4.0",
@@ -61,5 +66,32 @@
     "node": ">= 10.18.1",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "q_moedict"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
