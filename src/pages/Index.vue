@@ -57,13 +57,13 @@
         <!-- <a name = "print" class="print no-print" @click = "closeD()" onclick="setTimeout(() => {window.print()}, 500)">
           <q-icon name="print" />
         </a> -->
-        <a name = "showDraw" class="red no-print" @click = "showDraw = !showDraw; progress=0" :title="s('筆順')">
+        <!-- <a name = "showDraw" class="red no-print" @click = "showDraw = !showDraw; progress=0" :title="s('筆順')">
           <q-icon name="edit" />
         </a>
         <span id="word" v-show="showDraw" :style="{width: w.split('').length * 100 + 'vmax', transform: 'scale(' + 0.8 / w.split('').length + ')'}">
           <word :data="moe" :progress="progress" ></word>
         </span>
-        <div class="thin-only divider" v-show="showDraw" :style="{margin: 20 / w.split('').length + 'em'} "></div>
+        <div class="thin-only divider" v-show="showDraw" :style="{margin: 20 / w.split('').length + 'em'} "></div> -->
         <!--
         <a class="si no-print" v-if = "!si" @click="s1(true)">
           簡
@@ -141,16 +141,21 @@
 
 <script>
 import { sify } from 'chinese-conv'
-// eslint-disable-next-line
-import { data, Word } from 'react-zh-stroker'
-// import { default as RZS } from 'react-zh-stroker'
-// const { data, Word } = RZS
+// 暫時移除 react-zh-stroker，因為它與 Vue 3 不相容
+// import { data, Word } from 'react-zh-stroker'
 
 import Box from '../components/Box.vue'
 
+// 創建一個簡單的 Word 組件替代
+const SimpleWord = {
+  name: 'SimpleWord',
+  props: ['data', 'progress'],
+  template: '<div class="simple-word">筆順功能暫時停用</div>'
+}
+
 export default {
   name: 'PageIndex',
-  components: { Word, Box },
+  components: { Word: SimpleWord, Box },
   data () {
     return {
       showBox: false,
@@ -182,10 +187,11 @@ export default {
   },
   mounted () {
     this.startDraw()
-    this.$axios.get('./json/840c.json').then((response) => {
-      // console.log(response.data)
-      this.moe = data.computeLength(response.data)
-    })
+    // 暫時移除 data.computeLength 的調用
+    // this.$axios.get('./json/840c.json').then((response) => {
+    //   // console.log(response.data)
+    //   this.moe = data.computeLength(response.data)
+    // })
     this.pre = this.$q.localStorage.getItem('pre') || this.pre
     this.url = this.$q.localStorage.getItem('url') || this.url
     if (this.pre === '~') {
@@ -201,7 +207,7 @@ export default {
       this.set('萌')
     }
     this.s1()
-    this.storeAll()
+    // this.storeAll() - 已移除，避免 LocalStorage 空間不足問題
   },
   methods: {
     bo (w, e) {
@@ -247,93 +253,71 @@ export default {
       }
       return code % (this.url === 'a' ? 1024 : 128)
     },
-    storeAll: function () {
-      // console.log('s')
-      var vm = this
-      this.$getItem('p' + this.url + 'ck/' + vm.num).then((d) => {
-        if (!d) {
-          vm.$axios.get('p' + vm.url + 'ck/' + vm.num + '.txt').then((response) => {
-            vm.$setItem('p' + vm.url + 'ck/' + vm.num, response.data, function (d) {
-              vm.num += 1
-              vm.storeAll()
-            })
-          })
-        } else {
-          Object.keys(d).map(function (k) {
-            const n = 0 + vm.num
-            if (k && n) {
-              vm.fillBucket2(k, n)
-            }
-          })
-          vm.num += 1
-          vm.storeAll()
-        }
-      })
-    },
+    // storeAll 功能已移除，避免 LocalStorage 空間不足問題
     fillBucket2: function (id, bucket, cb) {
       var vm = this
-      this.$getItem('p' + this.url + 'ck/' + bucket).then((d) => {
-        if (d) {
-          // console.log(d)
+      // 暫時使用 Quasar LocalStorage 替代 Vue LocalForage
+      var d = this.$q.localStorage.getItem('p' + this.url + 'ck/' + bucket)
+      if (d) {
+        // console.log(d)
+        // var key = id
+        // var part = d[key]
+        // console.log(vm.p(part.h[0].d[0].f).join(''))
+      } else {
+        vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
           // var key = id
-          // var part = d[key]
+          // var part = response.data[key]
           // console.log(vm.p(part.h[0].d[0].f).join(''))
-        } else {
-          vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
-            // var key = id
-            // var part = response.data[key]
-            // console.log(vm.p(part.h[0].d[0].f).join(''))
-          }).catch(err => {
-            err = err + ''
-            // console.log(err)
-          })
-        }
-      })
+        }).catch(err => {
+          err = err + ''
+          // console.log(err)
+        })
+      }
     },
     fillBucket: function (id, bucket, cb) {
       var vm = this
-      this.$getItem('p' + this.url + 'ck/' + bucket).then((d) => {
-        // console.log(d)
-        if (d) {
-          var key = escape(id)
-          var part = d[key]
-          // console.log(part)
-          this.data = part
-          // console.log(this.data)
-          if (this.data) {
-            this.bs = this.data.h.map((o) => { return o.b || '' })
-          }
-          this.playing = false
-          // addToLru(id)
-        } else {
-          vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
-            // console.log(response.data)
-            /* var raw = JSON.stringify(response.data)
-            var key, idx, part
-            key = escape(id)
-            idx = raw.indexOf('"' + key + '"')
-            if (idx === -1) {
-              return
-            }
-            part = raw.slice(idx + key.length + 3)
-            idx = part.indexOf('\n')
-            part = part.slice(0, idx) */
-            var key = escape(id)
-            var part = response.data[key]
-            // console.log(part)
-            vm.data = part
-            // console.log(this.data)
-            if (vm.data) {
-              vm.bs = vm.data.h.map((o) => { return o.b || '' })
-            }
-            vm.playing = false
-            // addToLru(id)
-          }).catch(err => {
-            vm.err = true
-            console.log(err)
-          })
+      // 暫時使用 Quasar LocalStorage 替代 Vue LocalForage
+      var d = this.$q.localStorage.getItem('p' + this.url + 'ck/' + bucket)
+      // console.log(d)
+      if (d) {
+        var key = escape(id)
+        var part = d[key]
+        // console.log(part)
+        this.data = part
+        // console.log(this.data)
+        if (this.data) {
+          this.bs = this.data.h.map((o) => { return o.b || '' })
         }
-      })
+        this.playing = false
+        // addToLru(id)
+      } else {
+        vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
+          // console.log(response.data)
+          /* var raw = JSON.stringify(response.data)
+          var key, idx, part
+          key = escape(id)
+          idx = raw.indexOf('"' + key + '"')
+          if (idx === -1) {
+            return
+          }
+          part = raw.slice(idx + key.length + 3)
+          idx = part.indexOf('\n')
+          part = part.slice(0, idx) */
+          var key = escape(id)
+          var part = response.data[key]
+          // console.log(part)
+          vm.data = part
+          // console.log(this.data)
+          if (vm.data) {
+            vm.bs = vm.data.h.map((o) => { return o.b || '' })
+          }
+          vm.playing = false
+          // addToLru(id)
+        }).catch(err => {
+          vm.err = true
+          console.log(err)
+        })
+      }
     },
     closeD () {
       this.$emit('closeD')
@@ -452,11 +436,11 @@ export default {
         return arr.map((k, idx) => {
           k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
           var obj = {
-            w: word[idx],
+            w: word[idx] || '',
             yin: k.substr(0, k.length - 1),
             diao: k.substr(k.length - 1, k.length),
-            pin: ps[idx],
-            T: ts[idx]
+            pin: ps[idx] || '',
+            T: ts[idx] || ''
           }
           if (obj.diao !== 'ˋ' && obj.diao !== 'ˊ' && obj.diao !== 'ˇ' && obj.diao !== 'ˊ') {
             obj.yin = obj.yin + obj.diao
@@ -487,9 +471,9 @@ export default {
         return w.split('').map((k, idx) => {
           k = k.replace(/（.+）/g, '').replace('ㄧ', '─')
           var obj = {
-            w: word[idx],
-            pin: (idx === 0 ? ps.join('') : ''),
-            T: ts[idx]
+            w: word[idx] || '',
+            pin: (idx === 0 ? (ps ? ps.join('') : '') : ''),
+            T: ts[idx] || ''
           }
           return obj
         })

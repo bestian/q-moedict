@@ -1,7 +1,7 @@
 {
-  "appId": "org.moedict.app",
+  "appId": "org.moedict.quasar.app",
   "appName": "萌典",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
-  "webDir": "www"
+  "webDir": "../dist/spa"
 }

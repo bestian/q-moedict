@@ -14,12 +14,9 @@
 
         <q-toolbar-title>
           <input id="s" type="search" name="s" v-model.trim="myKey" list="words" :placeholder="s('輸入字詞')" @keydown.enter="$router.push('/w/' + pre + myKey)"/>
-          <label for="s">-</label>
           <datalist id ="words">
             <option v-for = "d in has(data, myKey).slice(0,n)" :key="d" :value="d"></option>
-            }
-          </datalist>
-          <button :aria-label="s('查詢')" @click="$router.push('/w/' + pre + myKey)">{{ s('查詢') }}</button>
+          </datalist><button :aria-label="s('查詢')" @click="$router.push('/w/' + pre + myKey)">{{ s('查詢') }}</button>
         </q-toolbar-title>
 
         <a name="sify" class="big btn si no-print" v-if = "!si" @click="s1(true)" :title="s('轉成簡體')">
@@ -123,7 +120,6 @@
     </q-drawer>
 
     <q-page-container>
-      <div class="gcse-search"></div>
       <router-view @updateStars = "updateStars" @updateRes = "updateRes" @updateSi = "s1" @pre1="pre1" :stars="stars" @closeD = "closeD" :si="si"/>
     </q-page-container>
   </q-layout>
@@ -191,23 +187,7 @@ export default {
       this.si = si
       this.$q.localStorage.set('si', si)
     },
-    deep () {
-      var p = this.s('全站搜尋')
-      window.IS_GOOGLE_AFS_IFRAME_ = true
-      const cx = '007966820757635393756:sasf0rnevk4'
-      var gcse = document.createElement('script')
-      gcse.type = 'text/javascript'
-      gcse.async = true
-      gcse.src = 'https://www.google.com/cse/cse.js?cx=' + cx
-      var s = document.getElementsByTagName('script')[0]
-      s.parentNode.insertBefore(gcse, s)
-      setInterval(function () {
-        var e = document.getElementById('gsc-i-id1')
-        if (e) {
-          e.setAttribute('placeholder', p)
-        }
-      }, 500)
-    },
+    // deep() 方法已移除，Google 搜尋功能已停用
     onLoad () {
       this.n += 50
     },
@@ -231,36 +211,13 @@ export default {
     }
     this.s1(this.si)
     var vm = this
-    this.deep()
+    // this.deep() - 已移除，Google 搜尋功能已停用
     this.$axios.get('https://www.moedict.tw/' + this.url + '/index.json')
       .then((response) => {
         this.data = response.data
       })
     this.stars = this.$q.localStorage.getItem('words') || []
-    setInterval(function () {
-      var list = document.getElementsByClassName('gs-title')
-      for (var i = 0; i < list.length; i++) {
-        const e = list[i]
-        if (e.getAttribute('href')) {
-          var l = e.getAttribute('href')
-          l = ('' + l).replace('https://www.moedict.tw/', '')
-          e.removeAttribute('href')
-          e.removeAttribute('data-cturl')
-          e.removeAttribute('data-ctorig')
-          e.setAttribute('data-h', l)
-          e.setAttribute('target', 'self')
-          e.setAttribute('rel', 'noreferrer')
-          e.addEventListener('click', function (event) {
-            event.preventDefault()
-            console.log(this.getAttribute('data-h'))
-            vm.$router.push('/w/' + this.getAttribute('data-h'))
-            var x = document.getElementsByClassName('gsc-modal-background-image gsc-modal-background-image-visible')
-            x[0].click()
-            vm.$forceUpdate()
-          })
-        }
-      }
-    }, 1000)
+    // Google 搜尋結果處理程式碼已移除
   }
 }
 </script>

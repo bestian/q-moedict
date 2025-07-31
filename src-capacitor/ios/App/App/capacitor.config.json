@@ -1,7 +1,0 @@
-{
-  "appId": "org.moedict.app",
-  "appName": "萌典",
-  "bundledWebRuntime": false,
-  "npmClient": "yarn",
-  "webDir": "www"
-}

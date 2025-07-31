@@ -116,48 +116,47 @@ export default {
     },
     fillBucket: function (id, bucket, cb) {
       var vm = this
-      this.$getItem('p' + this.url + 'ck/' + bucket).then((d) => {
-        // console.log(d)
-        if (d) {
-          var key = escape(id)
-          var part = d[key]
-          // console.log(part)
-          this.data = part
-          // console.log(this.data)
-          if (this.data) {
-            this.bs = this.data.h.map((o) => { return o.b || '' })
-          }
-          this.playing = false
-          // addToLru(id)
-        } else {
-          vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
-            // console.log(response.data)
-            /* var raw = JSON.stringify(response.data)
-            var key, idx, part
-            key = escape(id)
-            idx = raw.indexOf('"' + key + '"')
-            if (idx === -1) {
-              return
-            }
-            part = raw.slice(idx + key.length + 3)
-            idx = part.indexOf('\n')
-            part = part.slice(0, idx) */
-            var key = escape(id)
-            var part = response.data[key]
-            // console.log(part)
-            vm.data = part
-            // console.log(this.data)
-            if (vm.data) {
-              vm.bs = vm.data.h.map((o) => { return o.b || '' })
-            }
-            vm.playing = false
-            // addToLru(id)
-          }).catch(err => {
-            vm.err = true
-            console.log(err)
-          })
+      // 暫時使用 Quasar LocalStorage 替代 Vue LocalForage
+      var d = this.$q.localStorage.getItem('p' + this.url + 'ck/' + bucket)
+      if (d) {
+        var key = escape(id)
+        var part = d[key]
+        // console.log(part)
+        this.data = part
+        // console.log(this.data)
+        if (this.data) {
+          this.bs = this.data.h.map((o) => { return o.b || '' })
         }
-      })
+        this.playing = false
+        // addToLru(id)
+      } else {
+        vm.$axios.get('p' + vm.url + 'ck/' + bucket + '.txt').then((response) => {
+          // console.log(response.data)
+          /* var raw = JSON.stringify(response.data)
+          var key, idx, part
+          key = escape(id)
+          idx = raw.indexOf('"' + key + '"')
+          if (idx === -1) {
+            return
+          }
+          part = raw.slice(idx + key.length + 3)
+          idx = part.indexOf('\n')
+          part = part.slice(0, idx) */
+          var key = escape(id)
+          var part = response.data[key]
+          // console.log(part)
+          vm.data = part
+          // console.log(this.data)
+          if (vm.data) {
+            vm.bs = vm.data.h.map((o) => { return o.b || '' })
+          }
+          vm.playing = false
+          // addToLru(id)
+        }).catch(err => {
+          vm.err = true
+          console.log(err)
+        })
+      }
     },
     closeD () {
       this.$emit('closeD')

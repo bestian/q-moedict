@@ -5,8 +5,7 @@
   "author": "Bestian Tang <bestian@gmail.com>",
   "private": true,
   "dependencies": {
-    "@capacitor/cli": "^2.0.0",
-    "@capacitor/core": "^2.0.0",
-    "@capacitor/ios": "2.4.6"
+    "@capacitor/cli": "^7.4.2",
+    "@capacitor/core": "^7.4.2"
   }
 }

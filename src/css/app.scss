@@ -71,7 +71,7 @@ a.big {
 }
 
 @media print {
-	.no-print, .gsc-control-cse {
+	.no-print {
 		display: none !important;
 		visibility: hidden !important;
 	}

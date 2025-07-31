@@ -1,12 +1,6 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import VueLocalForage from 'vue-localforage'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import routes from './routes'
-import { VuePlugin } from 'vuera'
 
-Vue.use(VueLocalForage)
-Vue.use(VueRouter)
-Vue.use(VuePlugin)
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -17,15 +11,14 @@ Vue.use(VuePlugin)
  */
 
 export default function (/* { store, ssrContext } */) {
-  const Router = new VueRouter({
-    scrollBehavior: () => ({ x: 0, y: 0 }),
+  const Router = createRouter({
+    scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
 
     // Leave these as they are and change in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
-    mode: process.env.VUE_ROUTER_MODE,
-    base: process.env.VUE_ROUTER_BASE
+    history: createWebHashHistory(process.env.VUE_ROUTER_BASE)
   })
 
   return Router
